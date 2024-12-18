@@ -10,36 +10,9 @@
           </a>
 
           <p class="header__info">
-            Log In into Instanews to see photos and videos from your friends.
+            برای مشاهده عکس‌ها و ویدیوهای دوستانتان وارد Instanews شوید.
           </p>
         </div>
-
-        <div class="social">
-          <button
-            type="button"
-            class="btn btn-primary btn-block social__btn"
-            @click="authWithFacebook"
-          >
-            <span class="fa fa-facebook social__logo"></span>
-            Login with facebook
-          </button>
-
-          <button type="button" class="btn btn-dark btn-block social__btn" @click="authWithGithub">
-            <span class="fa fa-github social__logo"></span>
-            Login with github
-          </button>
-
-          <button
-            type="button"
-            class="btn btn-danger btn-block social__btn"
-            @click="authWithGoogle"
-          >
-            <span class="fa fa-google social__logo"></span>
-            Login with google
-          </button>
-        </div>
-
-        <or-divider></or-divider>
 
         <div class="alert alert-danger err-msg" role="alert" v-show="this.errMessage">
           {{ this.errMessage }}
@@ -52,7 +25,8 @@
               name="email"
               id="email"
               class="form-control"
-              placeholder="Email address"
+              
+              placeholder="ایمیل"
               v-model="email"
             />
           </div>
@@ -63,7 +37,7 @@
               name="password"
               id="password"
               class="form-control"
-              placeholder="Password"
+              placeholder="رمز عبور"
               v-model="password"
             />
           </div>
@@ -75,20 +49,20 @@
                 class="btn btn-primary btn-block auth-btn"
                 @click.prevent="login"
               >
-                Log In
+                ورود
               </button>
             </div>
 
             <div class="options__second">
-              <div class="forgot">
+              <!-- <div class="forgot">
                 <a href="./forget" class="forgot__link">
                   Forgot password?
                 </a>
-              </div>
+              </div> -->
 
               <div class="have-account">
-                <span>Don't have an account? </span>
-                <a href="./signup" class="have-account__link">Sign up</a>
+                <span>حساب کاربری ندارید ؟ </span>
+                <a href="./signup" class="have-account__link">ایجاد حساب کاربری</a>
               </div>
             </div>
           </div>
@@ -189,7 +163,7 @@ export default {
     width: 400px;
     float: right;
     margin: 20px 10px 0px 10px;
-    padding: 40px;
+    padding: 100px 40px 40px 40px;
 
     @media (max-width: 992px) {
       margin: 20px auto;
@@ -246,7 +220,7 @@ export default {
 
 .form-control {
   background: $white-smoke;
-  padding: 8px 0 8px 10px;
+  padding: 8px 10px 8px 10px;
   color: $darker-gray;
   font-size: $font-size-2x;
   line-height: 18px;
