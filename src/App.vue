@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import firebase from 'firebase';
 import Navbar from './components/Navbar/Navbar';
 
 export default {
@@ -22,17 +21,13 @@ export default {
     navbar: Navbar,
   },
   mounted: function() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.user = user;
-        localStorage.setItem('accessToken', user.uid);
-        localStorage.setItem('displayName', user.displayName);
-      } else {
-        this.user = null;
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('displayName');
-      }
-    });
+    const token = localStorage.getItem('accessToken');
+    const user = localStorage.getItem('user');
+    if (token && user) {
+      this.user = JSON.parse(user);
+    } else {
+      this.user = null;
+    }
   },
 };
 </script>

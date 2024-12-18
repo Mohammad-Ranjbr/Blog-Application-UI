@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import axios from 'axios'; // برای ارسال درخواست به API از axios استفاده می‌کنیم
 
 export default {
   name: 'Login',
@@ -89,64 +89,34 @@ export default {
     'or-divider': () => import('./../components/OrDivider/OrDivider'),
   },
   methods: {
-    login: function() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          user => {
-            window.location = '/';
-          },
-          err => {
-            if (err.code === 'auth/invalid-email') {
-              this.errMessage = err.message;
-            } else if (err.code === 'auth/wrong-password') {
-              this.errMessage = 'The password is invalid';
-            }
-          },
-        );
-    },
-    authWithGoogle: function() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(res => {
-          window.location = '/';
-        })
-        .catch(err => {
-          alert('Oops. ' + err.message);
+    async login() {
+      try {
+        const response = await axios.post('https://your-api-endpoint.com/login', {
+          email: this.email,
+          password: this.password,
         });
-    },
-    authWithGithub: function() {
-      const provider = new firebase.auth.GithubAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(result) {
-          // redirect to home page
-          window.location = '/';
-        })
-        .catch(function(error) {
-          alert('Oops. ' + error.message);
-        });
-    },
-    authWithFacebook: function() {
-      const provider = new firebase.auth.FacebookAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(result) {
-          // redirect to home page
-          window.location = '/';
-        })
-        .catch(function(error) {
-          alert('Oops. ' + error.message);
-        });
+
+        // فرض می‌کنیم پاسخ شامل توکن و اطلاعات کاربر است
+        const { token, user } = response.data;
+
+        // ذخیره اطلاعات توکن در localStorage
+        localStorage.setItem('accessToken', token);
+        localStorage.setItem('user', JSON.stringify(user));
+
+        // هدایت به صفحه اصلی
+        window.location = '/';
+      } catch (err) {
+        if (err.response && err.response.data && err.response.data.message) {
+          this.errMessage = err.response.data.message;
+        } else {
+          this.errMessage = 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.';
+        }
+      }
     },
   },
 };
 </script>
+
 
 <style lang="scss" scoped>
 * {

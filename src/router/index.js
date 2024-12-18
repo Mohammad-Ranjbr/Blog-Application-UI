@@ -4,6 +4,10 @@ import { isLoggedIn } from './../auth/index';
 
 Vue.use(VueRouter);
 
+const isLoggedIn = () => {
+  return !!localStorage.getItem('accessToken');
+};
+
 const routes = [
   {
     path: '/',
@@ -62,25 +66,14 @@ const router = new VueRouter({
   routes,
 });
 
-// check for validating routes beforeEach redirect
+// Middleware برای چک کردن احراز هویت
 router.beforeEach((to, from, next) => {
-  if (to.name == 'Login' && isLoggedIn()) {
-    next({
-      path: '/',
-    });
-  } else if (to.name == 'Signup' && isLoggedIn()) {
-    next({
-      path: '/',
-    });
-  } else if (
-    to.name != 'Login' &&
-    to.name != 'Signup' &&
-    to.name != 'ForgetPassword' &&
-    !isLoggedIn()
-  ) {
-    next({
-      path: '/login',
-    });
+  if (to.name === 'Login' && isLoggedIn()) {
+    next({ path: '/' });
+  } else if (to.name === 'Signup' && isLoggedIn()) {
+    next({ path: '/' });
+  } else if (!['Login', 'Signup', 'ForgetPassword'].includes(to.name) && !isLoggedIn()) {
+    next({ path: '/login' });
   } else {
     next();
   }
