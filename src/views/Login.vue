@@ -6,11 +6,11 @@
       <div class="right-col text-center">
         <div class="header">
           <a href="/" class="header__link">
-            <h2 class="header__title">Instanews</h2>
+            <h2 class="header__title">Blogino</h2>
           </a>
 
           <p class="header__info">
-            برای مشاهده عکس‌ها و ویدیوهای دوستانتان وارد Instanews شوید.
+            برای مشاهده عکس‌ها و ویدیوهای دوستانتان وارد Blogino شوید.
           </p>
         </div>
 
@@ -163,7 +163,7 @@ export default {
     width: 400px;
     float: right;
     margin: 20px 10px 0px 10px;
-    padding: 100px 40px 40px 40px;
+    padding: 120px 40px 40px 40px;
 
     @media (max-width: 992px) {
       margin: 20px auto;

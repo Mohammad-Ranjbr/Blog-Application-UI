@@ -7,30 +7,13 @@
         <div class="right-col text-center">
           <div class="header">
             <a href="/" class="header__link">
-              <h2 class="header__title">Instanews</h2>
+              <h2 class="header__title">Blogino</h2>
             </a>
 
             <p class="header__info">
-              Log In into Instanews to see photos and videos from your friends.
+              برای مشاهده عکس‌ها و ویدیوهای دوستانتان وارد Blogino شوید.
             </p>
           </div>
-
-          <div class="social">
-            <button type="button" class="btn btn-primary btn-block social__btn">
-              <span class="fa fa-facebook social__logo"></span>
-              Login with facebook
-            </button>
-            <button type="button" class="btn btn-dark btn-block social__btn">
-              <span class="fa fa-github social__logo"></span>
-              Login with github
-            </button>
-            <button type="button" class="btn btn-danger btn-block social__btn">
-              <span class="fa fa-google social__logo"></span>
-              Login with google
-            </button>
-          </div>
-
-          <or-divider></or-divider>
 
           <div class="alert alert-danger err-msg" role="alert" v-show="this.errMessage">
             {{ this.errMessage }}
@@ -43,7 +26,7 @@
                 name="username"
                 id="username"
                 class="form-control"
-                placeholder="Enter your username"
+                placeholder="نام کاربری"
                 v-model="username"
               />
 
@@ -52,7 +35,7 @@
                 name="email"
                 id="email"
                 class="form-control"
-                placeholder="Email address"
+                placeholder="ایمیل"
                 v-model="email"
               />
             </div>
@@ -63,7 +46,7 @@
                 name="password"
                 id="password"
                 class="form-control"
-                placeholder="Enter your password"
+                placeholder="رمز عبور"
                 v-model="password"
               />
             </div>
@@ -74,7 +57,7 @@
                 name="confirm-password"
                 id="confirm-password"
                 class="form-control"
-                placeholder="Confirm your password"
+                placeholder="تکرار رمز عبور"
                 v-model="confirmPassword"
               />
             </div>
@@ -82,19 +65,19 @@
             <div class="options">
               <div class="options__first">
                 <button type="button" class="btn btn-primary btn-block auth-btn" @click="signup">
-                  Sign Up
+                  ثبت‌نام
                 </button>
               </div>
 
               <div class="options__second">
                 <p class="conditions">
-                  By signing up, you agree to <span>our Terms</span>, <span>Data Policy</span> and
-                  <span>Cookies Policy</span>
+                  با ثبت‌نام، شما با شرایط استفاده <span>شرایط استفاده</span>، <span>سیاست حریم خصوصی</span> و 
+                  <span>سیاست کوکی‌ها</span> موافقت می‌کنید.
                 </p>
 
                 <div class="have-account">
-                  <span>Have an account? </span>
-                  <a href="./login" class="have-account__link">Log In</a>
+                  <span>آیا حساب کاربری دارید ؟ </span>
+                  <a href="./login" class="have-account__link">ورود</a>
                 </div>
               </div>
             </div>
@@ -279,7 +262,7 @@ export default {
 
 .form-control {
   background: $white-smoke;
-  padding: 8px 0 8px 10px;
+  padding: 8px 10px 8px 10px;
   color: $darker-gray;
   font-size: $font-size-2x;
   line-height: 18px;
