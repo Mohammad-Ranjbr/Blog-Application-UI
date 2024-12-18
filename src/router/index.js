@@ -1,12 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { isLoggedIn } from './../auth/index';
+import { isLoggedIn } from './../auth/index'; // Ensure this import is correct
 
 Vue.use(VueRouter);
-
-const isLoggedIn = () => {
-  return !!localStorage.getItem('accessToken');
-};
 
 const routes = [
   {

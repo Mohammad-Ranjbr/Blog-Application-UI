@@ -27,7 +27,7 @@
               class="form-control"
               
               placeholder="ایمیل"
-              v-model="email"
+              v-model="username"
             />
           </div>
 
@@ -79,7 +79,7 @@ export default {
   name: 'Login',
   data: function() {
     return {
-      email: '',
+      username: '',
       password: '',
       errMessage: '',
     };
@@ -91,8 +91,8 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await axios.post('https://your-api-endpoint.com/login', {
-          email: this.email,
+        const response = await axios.post('http://localhost:8082/api/v1/auth/login', {
+          username: this.username,
           password: this.password,
         });
 
