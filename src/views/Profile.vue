@@ -1,9 +1,16 @@
 <template>
   <div class="profile">
     <profile-header></profile-header>
-    <profile-stories></profile-stories>
+    <!-- <profile-stories></profile-stories> -->
 
-    <div class="suggestions">
+    <profile-header-title
+      :username="userProfile.username"
+      :postsCount="userProfile.postsCount"
+      :followersCount="userProfile.followersCount"
+      :followingCount="userProfile.followingCount"
+    />
+    
+    <div class="suggestions" style="margin-top: 30px;">
       <div class="direc direc--left" @click="scroll_left">
         <img src="./../assets/left-arrow.png" alt="left arrow" class="arrow" />
       </div>
@@ -74,7 +81,13 @@
   </div>
 </template>
 
+
 <script>
+import axios from 'axios';
+import VueJwtDecode from 'vue-jwt-decode';
+import ProfileHeaderTitle from '@/components/ProfileHeaderTitle/ProfileHeaderTitle.vue';
+
+
 export default {
   name: 'Profile',
   data: function() {
@@ -83,6 +96,7 @@ export default {
       postsOrTagged: false,
       galleryPosts: require('./../mock/Profile/ProfileGallery').default,
       galleryTagged: require('./../mock/Profile/ProfileTagged').default,
+      current_user: null, // اضافه کردن متغیر current_user برای ذخیره اطلاعات کاربر
     };
   },
   components: {
@@ -108,6 +122,39 @@ export default {
     setGalleryTagged() {
       this.postsOrTagged = true;
     },
+    decode() {
+      let token = localStorage.getItem('accessToken');
+      console.log(token)
+      try {
+        if (token) {
+          let decoded = VueJwtDecode.decode(token);
+          this.current_user = decoded; 
+          let userId = this.current_user.id;
+          console.log('User ID:', userId)
+          this.fetchUserProfile(userId)
+        } else {
+          console.log('Token is null or undefined');
+        }
+      } catch (err) {
+        console.log('Error decoding token: ', err);
+      }
+    },
+    fetchUserProfile(userId) {
+      axios.get(`http://localhost:8082/api/v1/users/${userId}`, {
+      headers: {
+      Authorization: `${localStorage.getItem('accessToken')}`
+    }
+      })
+      .then(response => {
+        const userProfile = response.data; 
+
+        console.log('User profile:', userProfile);
+        this.userProfile = userProfile;
+      })
+      .catch(error => {
+        console.error('There was an error fetching the user profile:', error);
+      });
+    },
   },
   computed: {
     type: function() {
@@ -117,8 +164,22 @@ export default {
       return this.postsOrTagged ? this.galleryPosts : this.galleryTagged;
     },
   },
+  mounted() {
+    this.decode();
+  },
+  data() {
+    return {
+      userProfile: {
+        username: 'hellomayuko',
+        postsCount: 494,
+        followersCount: '40.8k',
+        followingCount: 1708,
+      },
+    };
+  }
 };
 </script>
+
 
 <style lang="scss" scoped>
 .suggestions {

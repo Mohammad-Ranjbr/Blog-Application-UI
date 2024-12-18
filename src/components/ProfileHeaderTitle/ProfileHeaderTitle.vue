@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header__first">
-      <div class="header__username">hellomayuko</div>
+      <div class="header__username">{{username}}</div>
 
       <div class="header__actions">
         <button class="header__action-btn">Message</button>
@@ -104,6 +104,12 @@
 <script>
 export default {
   name: 'ProfileHeaderTitle',
+  props: {
+    username: String,
+    postsCount: Number,
+    followersCount: String,
+    followingCount: Number,
+  },
   data: function() {
     return {
       listOfFollowers: require('./../../mock/Profile/ListOfFollowers').default,

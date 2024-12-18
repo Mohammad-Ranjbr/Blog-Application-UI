@@ -8,7 +8,7 @@
     />
 
     <div class="user-names">
-      <div class="user-info__username">Abdallah Hemdan</div>
+      <div class="user-info__username">Mohammad</div>
       <span class="user-info__sub-name">Abdallah_Ahmed_Hemdan</span>
     </div>
   </div>

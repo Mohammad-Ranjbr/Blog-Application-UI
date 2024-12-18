@@ -2,7 +2,7 @@
   <div class="row">
     <div class="left">
       <img
-        src="https://instagram.fcai19-2.fna.fbcdn.net/v/t51.2885-19/s150x150/71101176_686434495193983_6272575461205737472_n.jpg?_nc_ht=instagram.fcai19-2.fna.fbcdn.net&_nc_ohc=7CYZj8q2csIAX8P9RZj&oh=8edba4fd96c6ed9fdc22f794eebceada&oe=5F4E65C7"
+        src=""
         alt="profile image"
         class="profile-img"
       />

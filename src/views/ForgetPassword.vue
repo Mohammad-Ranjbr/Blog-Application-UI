@@ -77,7 +77,6 @@
 </template>
 
 <script>
-import firebase from 'firebase';
 
 export default {
   name: 'ForgetPassword',
@@ -94,17 +93,7 @@ export default {
   },
   methods: {
     forgetPassword: function() {
-      firebase
-        .auth()
-        .sendPasswordResetEmail(this.email)
-        .then(user => {
-          this.errMessage = 'Please check your email to reset your password';
-          this.success = true;
-        })
-        .catch(err => {
-          this.errMessage = err.message;
-          this.success = false;
-        });
+      
     },
     handleBackToLogin: function() {
       window.location = '/login';
