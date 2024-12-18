@@ -20,7 +20,7 @@ export default {
   components: {
     newsfeed: () => import('./../components/Newsfeed/Newsfeed'),
     'user-suggestions': () => import('./../components/UserSuggestions/UserSuggestions'),
-    'home-stories': () => import('./../components/HomeStories/HomeStories'),
+    // 'home-stories': () => import('./../components/HomeStories/HomeStories'),
   },
 };
 </script>

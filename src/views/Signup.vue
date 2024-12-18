@@ -11,7 +11,7 @@
             </a>
 
             <p class="header__info">
-              برای مشاهده عکس‌ها و ویدیوهای دوستانتان وارد Blogino شوید.
+              Sign up to <span>Blogino</span> and connect with your friends.
             </p>
           </div>
 
@@ -23,20 +23,44 @@
             <div class="form-label-group">
               <input
                 type="text"
-                name="username"
-                id="username"
+                name="name"
+                id="name"
                 class="form-control"
-                placeholder="نام کاربری"
-                v-model="username"
+                placeholder="Full Name ..."
+                v-model="name"
               />
+            </div>
 
+            <div class="form-label-group">
+              <input
+                type="text"
+                name="userName"
+                id="userName"
+                class="form-control"
+                placeholder="Username ..."
+                v-model="userName"
+              />
+            </div>
+
+            <div class="form-label-group">
               <input
                 type="email"
                 name="email"
                 id="email"
                 class="form-control"
-                placeholder="ایمیل"
+                placeholder="Email ..."
                 v-model="email"
+              />
+            </div>
+
+            <div class="form-label-group">
+              <input
+                type="text"
+                name="phoneNumber"
+                id="phoneNumber"
+                class="form-control"
+                placeholder="Phone Number ..."
+                v-model="phoneNumber"
               />
             </div>
 
@@ -46,38 +70,37 @@
                 name="password"
                 id="password"
                 class="form-control"
-                placeholder="رمز عبور"
+                placeholder="Password ..."
                 v-model="password"
               />
             </div>
 
             <div class="form-label-group">
-              <input
-                type="password"
-                name="confirm-password"
-                id="confirm-password"
+              <textarea
+                name="about"
+                id="about"
                 class="form-control"
-                placeholder="تکرار رمز عبور"
-                v-model="confirmPassword"
-              />
+                placeholder="About You ..."
+                v-model="about"
+              ></textarea>
             </div>
 
             <div class="options">
               <div class="options__first">
                 <button type="button" class="btn btn-primary btn-block auth-btn" @click="signup">
-                  ثبت‌نام
+                  Signup
                 </button>
               </div>
 
               <div class="options__second">
                 <p class="conditions">
-                  با ثبت‌نام، شما با شرایط استفاده <span>شرایط استفاده</span>، <span>سیاست حریم خصوصی</span> و 
-                  <span>سیاست کوکی‌ها</span> موافقت می‌کنید.
+                  By signing up, you agree to <span>our Terms</span>, <span>Data Policy</span> and
+                  <span>Cookies Policy</span>
                 </p>
 
                 <div class="have-account">
-                  <span>آیا حساب کاربری دارید ؟ </span>
-                  <a href="./login" class="have-account__link">ورود</a>
+                  <span>Already have an account?</span>
+                  <a href="./login" class="have-account__link">Login</a>
                 </div>
               </div>
             </div>
@@ -89,91 +112,57 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import axios from 'axios';
 
 export default {
   name: 'Signup',
   data: function() {
     return {
-      username: '',
+      name: '',
+      userName: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      phoneNumber: '',
+      about: '',
+      imageData: {
+        format: "",
+        base64Content: ""
+    },
       errMessage: '',
     };
   },
   components: {
     'left-auth': () => import('./../components/LeftAuth/LeftAuth'),
-    'or-divider': () => import('./../components/OrDivider/OrDivider'),
   },
   methods: {
-    signup: function() {
-      if (!this.username) {
+    async signup() {
+      // Check if form fields are filled correctly
+      if (!this.userName) {
         this.errMessage = "Username can't be empty";
         return;
-      } else if (this.password != this.confirmPassword) {
-        this.errMessage = 'The two passwords are not equal';
-        return;
       }
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(
-          user => {
-            if (firebase.auth().currentUser) {
-              firebase
-                .auth()
-                .currentUser.updateProfile({
-                  displayName: this.username,
-                })
-                .then(e => {
-                  window.location = '/';
-                });
-            }
-          },
-          err => {
-            console.log(err);
-            this.errMessage = err.message;
-          },
-        );
-    },
-    authWithGoogle: function() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(res => {
-          window.location = '/';
-        })
-        .catch(err => {
-          alert('Oops. ' + err.message);
+
+      try {
+        // Send signup data to the API
+        const response = await axios.post('http://localhost:8082/api/v1/users/register', {
+          name: this.name,
+          userName: this.userName,
+          email: this.email,
+          phoneNumber: this.phoneNumber,
+          password: this.password,
+          about: this.about,
+          imageData: this.imageData
         });
-    },
-    authWithGithub: function() {
-      const provider = new firebase.auth.GithubAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(result) {
-          // redirect to home page
-          window.location = '/';
-        })
-        .catch(function(error) {
-          alert('Oops. ' + error.message);
-        });
-    },
-    authWithFacebook: function() {
-      const provider = new firebase.auth.FacebookAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(result) {
-          // redirect to home page
-          window.location = '/';
-        })
-        .catch(function(error) {
-          alert('Oops. ' + error.message);
-        });
+
+        // Handle success (redirect to login page)
+        this.$router.push('/login'); // Redirect to login page after successful signup
+      } catch (err) {
+        if (err.response && err.response.data && err.response.data.message) {
+          this.errMessage = err.response.data.message;
+        } else {
+          this.errMessage = 'An error occurred. Please try again.';
+        }
+      }
     },
   },
 };
@@ -186,15 +175,15 @@ export default {
 }
 
 .auth-container {
-  margin-top: 20px;
+  margin-top: 0px;
 
   .right-col {
     background-color: $white;
     border: 1px solid $lighter-gray;
     width: 400px;
     float: right;
-    margin: 20px 10px 0px 10px;
-    padding: 40px;
+    margin: -20px 10px 0px 10px;
+    padding: 80px 40px 40px 40px;
 
     @media (max-width: 992px) {
       margin: 20px auto;
