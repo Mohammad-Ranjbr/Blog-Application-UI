@@ -10,7 +10,7 @@
           </a>
 
           <p class="header__info">
-            برای مشاهده عکس‌ها و ویدیوهای دوستانتان وارد Blogino شوید.
+            Log in to <span>Blogino</span> to see photos and videos from your friends.
           </p>
         </div>
 
@@ -26,7 +26,7 @@
               id="email"
               class="form-control"
               
-              placeholder="ایمیل"
+              placeholder="Enter Email ..."
               v-model="username"
             />
           </div>
@@ -37,7 +37,7 @@
               name="password"
               id="password"
               class="form-control"
-              placeholder="رمز عبور"
+              placeholder="Enter Password ..."
               v-model="password"
             />
           </div>
@@ -49,7 +49,7 @@
                 class="btn btn-primary btn-block auth-btn"
                 @click.prevent="login"
               >
-                ورود
+                Login
               </button>
             </div>
 
@@ -61,8 +61,8 @@
               </div> -->
 
               <div class="have-account">
-                <span>حساب کاربری ندارید ؟ </span>
-                <a href="./signup" class="have-account__link">ایجاد حساب کاربری</a>
+                <span>Don't have an account?</span>
+                <a href="./signup" class="have-account__link">Signup</a>
               </div>
             </div>
           </div>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import axios from 'axios'; // برای ارسال درخواست به API از axios استفاده می‌کنیم
+import axios from 'axios';
 
 export default {
   name: 'Login',
@@ -96,14 +96,11 @@ export default {
           password: this.password,
         });
 
-        // فرض می‌کنیم پاسخ شامل توکن و اطلاعات کاربر است
-        const { token, user } = response.data;
+        const { access_token, user } = response.data;
 
-        // ذخیره اطلاعات توکن در localStorage
-        localStorage.setItem('accessToken', token);
+        localStorage.setItem('accessToken', access_token);
         localStorage.setItem('user', JSON.stringify(user));
 
-        // هدایت به صفحه اصلی
         window.location = '/';
       } catch (err) {
         if (err.response && err.response.data && err.response.data.message) {

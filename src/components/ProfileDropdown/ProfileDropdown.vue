@@ -56,8 +56,9 @@ export default {
   name: 'ProfileDropdown',
   methods: {
     logout: function() {
-      firebase.auth().signOut();
       window.localStorage.removeItem('accessToken');
+      window.localStorage.removeItem('user');
+      window.location.reload();
     },
   },
 };
