@@ -95,10 +95,10 @@ export default {
 
   &__owner {
     margin-left: 10px;
-    color: $main-color;
+    color: black;
     font-size: 15px;
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 0px;
 
     &:hover {
       text-decoration: none;

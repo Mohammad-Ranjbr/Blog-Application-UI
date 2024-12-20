@@ -59,11 +59,11 @@ export default {
           title: 'Explore',
           imgSrc: 'https://img.icons8.com/ios/30/000000/compass.png',
         },
-        // {
-        //   href: '/inbox',
-        //   title: 'Chat',
-        //   imgSrc: 'https://img.icons8.com/ios/30/000000/sent.png',
-        // },
+        {
+          href: '/inbox',
+          title: 'Chat',
+          imgSrc: 'https://img.icons8.com/ios/30/000000/sent.png',
+        },
       ],
     };
   },
