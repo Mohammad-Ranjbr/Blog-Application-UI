@@ -19,14 +19,14 @@
         />
       </a>
 
-      <a class="post-actions__share">
+      <!-- <a class="post-actions__share">
         <img
           src="./../../assets/svgs/share.svg"
           alt="share"
           class="post-actions__icon"
           draggable="false"
         />
-      </a>
+      </a> -->
     </div>
 
     <div class="post-actions__right">

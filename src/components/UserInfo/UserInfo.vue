@@ -9,7 +9,7 @@
 
     <div class="user-names">
       <div class="user-info__username">Mohammad</div>
-      <span class="user-info__sub-name">Abdallah_Ahmed_Hemdan</span>
+      <span class="user-info__sub-name">Mohammad Ranjbar</span>
     </div>
   </div>
 </template>
@@ -27,11 +27,11 @@ export default {
   align-items: center;
 
   &__img {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: transparent;
-    border: 2px solid $light-gray;
+    border: 2px solid rgb(23, 192, 122);
     padding: 2px;
     margin-right: 15px;
   }

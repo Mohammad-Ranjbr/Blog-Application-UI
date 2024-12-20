@@ -21,9 +21,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <button class="post-modal-choice danger-choice">Report Inappropriate</button>
               <button class="post-modal-choice danger-choice">Unfollow</button>
-              <button class="post-modal-choice">Go to post</button>
               <button class="post-modal-choice lst-choice" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">Cancel</span>
               </button>
