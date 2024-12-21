@@ -11,14 +11,34 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'UserSuggestions',
   data: function() {
     return {
-      usersToSuggest: require('./../../mock/Home/UserSuggestions').default,
-    };
+      usersToSuggest: [],
+    }; 
   },
-  methods: {},
+  methods: {
+    fetchUserSuggestions() {
+      axios
+        .get('http://localhost:8082/api/v1/users/suggestions', {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.usersToSuggest = response.data; 
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت کاربران پیشنهاد‌شده:', error);
+        });
+    },
+  },
+  mounted() {
+    this.fetchUserSuggestions(); 
+  },
   computed: {},
   components: {
     'user-info': () => import('./../UserInfo/UserInfo'),

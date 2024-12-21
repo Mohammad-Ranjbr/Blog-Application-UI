@@ -2,15 +2,15 @@
   <div class="suggestion">
     <div class="suggestion__left">
       <img
-        :src="user.userImg"
-        :alt="user.username"
+        :src="user.image ? `data:image/jpeg;base64,${user.image}` : 'default-image.jpg'"
+        :alt="user.userName"
         class="suggestion__user-img"
         draggable="false"
       />
 
       <div class="suggestion__info">
-        <div class="suggestion__username">{{ user.username }}</div>
-        <span class="suggestion__relation">{{ user.suggestionBase }}</span>
+        <div class="suggestion__username">{{ user.userName }}</div>
+        <span class="suggestion__relation">{{ user.name }}</span>
       </div>
     </div>
 
