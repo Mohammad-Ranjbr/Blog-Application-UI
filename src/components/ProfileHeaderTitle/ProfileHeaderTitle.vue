@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header__first">
-      <div class="header__username">{{username}}</div>
+      <div class="header__username">{{userProfile.username}}</div>
 
       <div class="header__actions">
         <button class="header__action-btn">Message</button>
@@ -25,14 +25,14 @@
     </div>
 
     <div class="header__second">
-      <div class="profile-posts header__statistics-item"><span class="bold">494</span> posts</div>
+      <div class="profile-posts header__statistics-item"><span class="bold">{{ userProfile.postsCount }}</span> posts</div>
 
       <div
         class="profile-followers header__statistics-item"
         data-toggle="modal"
         data-target="#following"
       >
-        <span class="bold">40.8k</span> followers
+        <span class="bold">{{ userProfile.followersCount }}</span> followers
       </div>
 
       <div
@@ -67,7 +67,7 @@
         data-toggle="modal"
         data-target="#followers"
       >
-        <span class="bold">1,708</span> following
+        <span class="bold">{{ userProfile.followingCount }}</span> following
       </div>
 
       <div
@@ -102,23 +102,66 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'ProfileHeaderTitle',
-  props: {
-    username: String,
-    postsCount: Number,
-    followersCount: String,
-    followingCount: Number,
-  },
+ 
   data: function() {
     return {
       listOfFollowers: require('./../../mock/Profile/ListOfFollowers').default,
       listOfFollowing: require('./../../mock/Profile/ListOfFollowers').default,
+      userProfile: {
+        image: '',
+        username: null,
+        postsCount: 0,
+        followersCount: '',
+        followingCount: '',
+      },
     };
   },
+ 
   components: {
     'follow-item': () => import('./../FollowItem/FollowItem'),
   },
+
+
+
+
+ 
+  methods: {
+    fetchUserProfile(userId) {
+  axios
+    .get(`http://localhost:8082/api/v1/users/${userId}`, {
+      headers: {
+        Authorization: `${localStorage.getItem('accessToken')}`,
+      },
+    })
+    .then((response) => {
+      console.log('Response Data:', response.data); // بررسی داده‌ها
+      if (response.data) {
+        const userProfile = response.data;
+        this.userProfile = {
+          image: userProfile.image || '',
+          username: userProfile.userName || 'Unknown', // استفاده از مقدار پیش‌فرض در صورت نبود داده
+          postsCount: userProfile.postsCount || 0,
+          followersCount: userProfile.followersCount || 0,
+          followingCount: userProfile.followingCount || 0,
+        };
+      }
+    })
+    .catch((error) => {
+      console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
+    });
+}
+  },
+ 
+  mounted() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.fetchUserProfile(userId);
+    }
+  },
+ 
 };
 </script>
 

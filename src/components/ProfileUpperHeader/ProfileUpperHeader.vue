@@ -2,24 +2,76 @@
   <div class="row">
     <div class="left">
       <img
-        src=""
+        :src="userProfile.image ? `data:image/jpeg;base64,${userProfile.image}` : 'default-image.jpg'"
         alt="profile image"
         class="profile-img"
       />
     </div>
     <div class="right">
-      <upper-header></upper-header>
-      <profile-description></profile-description>
+      <upper-header :username="userProfile.username"></upper-header>
+      <profile-description 
+        :about="userProfile.about"
+        :email="userProfile.email"
+        :name="userProfile.name"
+   
+      ></profile-description>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+import upperHeader from './../ProfileHeaderTitle/ProfileHeaderTitle';
+import profileDescription from './../ProfileDescription/ProfileDescription';
+
 export default {
   name: 'ProfileUpperHeader',
+  data() {
+    return {
+      userProfile: {
+        image: '',
+        username: 'hellomayuko',
+        postsCount: 0,
+        followersCount: '',
+        followingCount: '',
+      },
+    };
+  },
+  methods: {
+    fetchUserProfile(userId) {
+      axios
+        .get(`http://localhost:8082/api/v1/users/${userId}`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          const userProfile = response.data;
+          this.userProfile = {
+            image: userProfile.image,
+            username: userProfile.username,
+            postsCount: userProfile.postsCount,
+            followersCount: userProfile.followersCount,
+            followingCount: userProfile.followingCount,
+            about:userProfile.about,
+            email:userProfile.email,
+            name:userProfile.name
+          };
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
+        });
+    },
+  },
   components: {
-    'upper-header': () => import('./../ProfileHeaderTitle/ProfileHeaderTitle'),
-    'profile-description': () => import('./../ProfileDescription/ProfileDescription'),
+    upperHeader,
+    profileDescription,
+  },
+  mounted() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.fetchUserProfile(userId);
+    }
   },
 };
 </script>
@@ -51,6 +103,7 @@ export default {
       width: 100px;
       height: 100px;
     }
+
     @media (max-width: 576px) {
       width: 150px;
       height: 150px;

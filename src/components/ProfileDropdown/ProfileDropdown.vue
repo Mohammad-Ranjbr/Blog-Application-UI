@@ -12,14 +12,14 @@
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="/profile">
+      <router-link :to="{ name: 'Profile', params: { id: userId } }">
         <img
           src="./../../assets/svgs/avatar.svg"
           alt="avatar image"
           class="profile-options__icon"
         />
         Profile
-      </a>
+      </router-link>
 
       <a class="dropdown-item" href="/profile/saved">
         <img src="./../../assets/svgs/unsaved.svg" alt="saved icon" class="profile-options__icon" />
@@ -53,6 +53,15 @@
 
 export default {
   name: 'ProfileDropdown',
+  data() {
+    return {
+      userId: null, // متغیری برای نگهداری User ID
+    };
+  },
+  created() {
+    // خواندن User ID از Local Storage
+    this.userId = localStorage.getItem('userId');
+  },
   methods: {
     logout: function() {
       window.localStorage.removeItem('accessToken');

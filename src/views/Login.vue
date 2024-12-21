@@ -99,7 +99,6 @@ export default {
         const { access_token, user } = response.data;
 
         localStorage.setItem('accessToken', access_token);
-        localStorage.setItem('user', JSON.stringify(user));
 
         window.location = '/';
       } catch (err) {

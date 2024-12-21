@@ -33,6 +33,9 @@ export default {
           let decoded = VueJwtDecode.decode(token);
           this.current_user = decoded;
           console.log('Decoded user:', this.current_user.id);
+          localStorage.setItem('userId', this.current_user.id);
+          localStorage.setItem('accessToken', token);
+
         } else {
           console.log('Token is null or undefined');
         }

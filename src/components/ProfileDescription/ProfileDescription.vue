@@ -1,28 +1,52 @@
 <template>
   <div class="profile-desc">
-    <h1 class="profile-desc__username">mayuko</h1>
+    <!-- نمایش نام کاربری -->
+    <h1 class="profile-desc__username">{{ username }}</h1>
 
-    <ul>
-      <li>🏠 Born in San Diego, CA</li>
-      <li>📹 Tech, Career, Lifestyle</li>
-      <li>🖥 Making Internet things (videos, iOS apps)</li>
-      <li>💖 Compassion, Inclusivity, Chill vibes</li>
-
-      <li class="profile-desc__link">
-        <a href="https://www.hellomayuko.com/">hellomayuko.com</a>
+    <!-- نمایش اطلاعات درباره کاربر -->
+    <ul class="profile-desc__info">
+      <li>
+        <span class="profile-desc__label">👤 </span> 
+        <span class="profile-desc__value">{{ name || 'Not provided' }}</span>
+      </li>
+      <li>
+        <span class="profile-desc__label">📧 </span> 
+        <span class="profile-desc__value">{{ email || 'Not provided' }}</span>
+      </li>
+      <li>
+        <span class="profile-desc__label">📝 </span> 
+        <span class="profile-desc__value">{{ about || 'No details available' }}</span>
       </li>
     </ul>
 
-    <div class="profile-desc__friends-follow">
+    <!-- <div class="profile-desc__friends-follow">
       Followed by
       <span> <a href="/">abdallah_hemdan</a> </span>, <span><a href="/">omar_ahmed</a></span>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 export default {
   name: 'ProfileDescription',
+  props: {
+    username: {
+      type: String,
+      default: '',
+    },
+    about: {
+      type: String,
+      default: 'No about information available.',
+    },
+    email: {
+      type: String,
+      default: 'No email provided.',
+    },
+    name: {
+      type: String,
+      default: 'No name provided.',
+    }
+  },
 };
 </script>
 
