@@ -1,7 +1,7 @@
 <template>
   <div class="suggestions-header">
     <div class="suggestions-header__title">Suggestions For You</div>
-    <a href="/all-suggestions" class="suggestions-header__see-all">See All</a>
+    <a href="/all-suggestions" class="suggestions-header__see-all"></a>
   </div>
 </template>
 

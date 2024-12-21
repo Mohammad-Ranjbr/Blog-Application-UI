@@ -3,12 +3,6 @@
     <profile-header></profile-header>
     <!-- <profile-stories></profile-stories> -->
 
-    <profile-header-title
-      :username="userProfile.username"
-      :postsCount="userProfile.postsCount"
-      :followersCount="userProfile.followersCount"
-      :followingCount="userProfile.followingCount"
-    />
     
     <div class="suggestions" style="margin-top: 30px;">
       <div class="direc direc--left" @click="scroll_left">
@@ -24,14 +18,15 @@
         <div class="suggestions__seeall" data-toggle="modal" data-target="#seeall">
           See All
         </div>
+      </div>
 
-        <div
+      <div
           class="modal fade"
           id="seeall"
           tabindex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
-        >
+        ><
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal__header">
@@ -43,23 +38,18 @@
 
               <div class="modal-body">
                 <follow-item
-                  v-for="(suggestion, index) in suggestions"
+                  v-for="(user, index) in suggestions"
                   :key="index"
-                  :following="suggestion"
+                  :user="user"
                 ></follow-item>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      
 
       <div class="suggestions__items">
-        <user-suggestion
-          v-for="(suggestion, index) in suggestions"
-          :key="index"
-          :suggestion="suggestion"
-        >
-        </user-suggestion>
+        <user-suggestion v-for="(user, index) in suggestions" :key="index" :user="user"></user-suggestion>
       </div>
     </div>
 
@@ -92,7 +82,7 @@ export default {
   name: 'Profile',
   data: function() {
     return {
-      suggestions: require('./../mock/Profile/ProfileSuggestions').default,
+      suggestions: [],
       postsOrTagged: false,
       galleryPosts: require('./../mock/Profile/ProfileGallery').default,
       galleryTagged: require('./../mock/Profile/ProfileTagged').default,
@@ -107,6 +97,21 @@ export default {
     'follow-item': () => import('./../components/FollowItem/FollowItem'),
   },
   methods: {
+    fetchUserSuggestions() {
+      axios
+        .get('http://localhost:8082/api/v1/users/suggestions', {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.suggestions = response.data; 
+    
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت کاربران پیشنهاد‌شده:', error);
+        });
+    },
     scroll_left() {
       let content = document.querySelector('.suggestions__items');
       content.scrollLeft -= 200;
@@ -165,18 +170,10 @@ export default {
     },
   },
   mounted() {
+    this.fetchUserSuggestions(); 
     this.decode();
   },
-  data() {
-    return {
-      userProfile: {
-        username: 'hellomayuko',
-        postsCount: 494,
-        followersCount: '40.8k',
-        followingCount: 1708,
-      },
-    };
-  }
+
 };
 </script>
 

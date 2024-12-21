@@ -7,19 +7,19 @@
     <div class="suggestions-item__body">
       <div class="suggestions-item__img-container">
         <img
-          :src="suggestion.img"
-          :alt="suggestion.name"
+        :src="user.image ? `data:image/jpeg;base64,${user.image}` : 'default-image.jpg'"
+          :alt="user.name"
           draggable="false"
           class="suggestions-item__img"
         />
       </div>
 
       <div class="suggestions-item__name">
-        {{ suggestion.name }}
+        {{ user.name }}
       </div>
 
       <div class="suggestions-item__subname">
-        {{ suggestion.nickName }}
+        {{ user.userName }}
       </div>
 
       <button class="suggestions-item__follow-cta">Follow</button>
@@ -31,7 +31,7 @@
 export default {
   name: 'UserSuggestionItem',
   props: {
-    suggestion: {
+    user: {
       type: Object,
       required: true,
     },
@@ -65,8 +65,8 @@ export default {
   }
 
   &__img {
-    width: 54px;
-    height: 54px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
   }
 
