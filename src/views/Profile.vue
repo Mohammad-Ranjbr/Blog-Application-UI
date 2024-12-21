@@ -75,13 +75,13 @@
 <script>
 import axios from 'axios';
 import VueJwtDecode from 'vue-jwt-decode';
-import ProfileHeaderTitle from '@/components/ProfileHeaderTitle/ProfileHeaderTitle.vue';
 
 
 export default {
   name: 'Profile',
   data: function() {
     return {
+      posts: [],
       suggestions: [],
       postsOrTagged: false,
       galleryPosts: require('./../mock/Profile/ProfileGallery').default,
@@ -160,6 +160,21 @@ export default {
         console.error('There was an error fetching the user profile:', error);
       });
     },
+    fetchUserPosts(userId) {
+    axios
+      .get(`http://localhost:8082/api/v1/posts/user/${userId}`, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        this.posts = response.data.content;
+        console.log("User posts:", this.posts);
+      })
+      .catch((error) => {
+        console.error('Error fetching user posts:', error);
+      });
+  },
   },
   computed: {
     type: function() {
