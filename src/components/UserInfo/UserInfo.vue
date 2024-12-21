@@ -1,22 +1,60 @@
 <template>
   <div class="user-info">
     <img
-      src="./../../assets/me.jpg"
+      :src="userProfile.image ? `data:image/jpeg;base64,${userProfile.image}` : 'default-image.jpg'"
       alt="Hemdan's profile image"
       class="user-info__img"
       draggable="false"
     />
 
     <div class="user-names">
-      <div class="user-info__username">Mohammad</div>
-      <span class="user-info__sub-name">Mohammad Ranjbar</span>
+      <div class="user-info__username">{{ userProfile.username }}</div>
+      <span class="user-info__sub-name">{{  userProfile.name }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'UserInfo',
+  data() {
+    return {
+      userProfile: {
+        image: '',
+        username: 'hellomayuko',
+        name: ''
+      },
+    };
+  },
+  methods: {
+    fetchUserProfile(userId) {
+      axios
+        .get(`http://localhost:8082/api/v1/users/${userId}`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          const userProfile = response.data;
+          this.userProfile = {
+            image: userProfile.image,
+            username: userProfile.userName,
+            name:userProfile.name
+          };
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
+        });
+    },
+  },
+  mounted() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.fetchUserProfile(userId);
+    }
+  },
 };
 </script>
 

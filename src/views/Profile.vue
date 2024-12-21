@@ -71,11 +71,11 @@
           <img src="./../assets/grid.png" alt="grid system" class="gallery-nav__icon" /> POSTS
         </div>
       </div>
-      <div class="gallery-nav__tagged gallery-nav__type" :class="{ 'active-type': postsOrTagged }">
+      <!-- <div class="gallery-nav__tagged gallery-nav__type" :class="{ 'active-type': postsOrTagged }">
         <div class="nav-cta" @click="setGalleryTagged">
           <img src="./../assets/tag.png" alt="tagged person" class="gallery-nav__icon" /> TAGGED
         </div>
-      </div>
+      </div> -->
     </div>
     <component :is="type" :items="items"></component>
   </div>

@@ -8,7 +8,7 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <img src="./../../assets/me.jpg" class="profile-options__img" alt="profile" />
+      <img :src="userProfile.image ? `data:image/jpeg;base64,${userProfile.image}` : 'default-image.jpg'" class="profile-options__img" alt="profile" />
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -50,12 +50,16 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: 'ProfileDropdown',
   data() {
     return {
-      userId: null, // متغیری برای نگهداری User ID
+      userId: null,
+      userProfile: {
+        image: '',
+       }
     };
   },
   created() {
@@ -68,6 +72,31 @@ export default {
       window.localStorage.removeItem('user');
       window.location.reload();
     },
+    fetchUserProfile(userId) {
+      axios
+        .get(`http://localhost:8082/api/v1/users/${userId}`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          const userProfile = response.data;
+          this.userProfile = {
+            image: userProfile.image,
+            username: userProfile.userName,
+            name:userProfile.name
+          };
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
+        });
+    }
+  },
+  mounted() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.fetchUserProfile(userId);
+    }
   },
 };
 </script>
