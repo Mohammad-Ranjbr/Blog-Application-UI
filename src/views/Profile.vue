@@ -145,9 +145,10 @@ export default {
         console.log('Error decoding token: ', err);
       }
     },
-    fetchUserPosts(userId) {
+    fetchUserPosts() {
+      let userid = localStorage.getItem('userId');
     axios
-      .get(`http://localhost:8082/api/v1/posts/user/396465bc-494a-4eaf-b261-1032aded8409`, {
+      .get(`http://localhost:8082/api/v1/posts/user/${userid}`, {
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`,
         },

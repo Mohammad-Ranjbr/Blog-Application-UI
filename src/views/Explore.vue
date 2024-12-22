@@ -1,26 +1,42 @@
 <template>
   <div class="gallery-container">
     <div class="gallery" v-if="items">
-      <gallery-item v-for="(item, index) in items" :key="index" :item="item"></gallery-item>
-    </div>
-
-    <div class="footer">
-      Made with ❤, ALL RIGHTS RECEIVED <a href="https://github.com/AbdallahHemdan">HEMDAN</a> &copy;
-      2020
+      <gallery-item v-for="(item, index) in items" :key="index" :item="item" />
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'ProfileGallery',
   data: function() {
     return {
-      items: require('./../mock/Explore/Explore').default,
+      items: []
     };
+  },
+  methods: {
+    fetchExplorePosts() {
+    axios
+      .get(`http://localhost:8082/api/v1/posts/explore-posts`, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        this.items = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching user posts:', error);
+      });
+  }
   },
   components: {
     'gallery-item': () => import('./../components/ProfileGalleryItem/ProfileGalleryItem'),
+  },
+  mounted() {
+    this.fetchExplorePosts();
   },
 };
 </script>

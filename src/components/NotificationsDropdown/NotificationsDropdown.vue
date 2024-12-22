@@ -42,7 +42,6 @@ export default {
         })
         .then((response) => {
           this.suggestions = response.data; 
-          console.log("121212", this.suggestions)
         })
         .catch((error) => {
           console.error('خطا در دریافت کاربران پیشنهاد‌شده:', error);
