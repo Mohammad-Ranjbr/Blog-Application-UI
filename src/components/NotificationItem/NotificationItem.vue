@@ -1,13 +1,13 @@
 <template>
   <a class="dropdown-item notification">
-    <img :src="notification.ownerImg" alt="avatar image" class="notification__icon" />
+    <img :src="user.image ? `data:image/jpeg;base64,${user.image}` : 'default-image.jpg'" alt="avatar image" class="notification__icon" />
 
     <div class="notification__right">
       <div class="notification__info">
-        <div class="user">{{ notification.owner }}</div>
+        <div class="user">{{ user.name }}</div>
 
         <div class="notification__description">
-          {{ notification.action }} <span>{{ notification.actionDate }}</span>
+          {{ user.userName }}
         </div>
       </div>
 
@@ -15,12 +15,12 @@
         <button
           :class="{
             notification__btn: true,
-            'notification__btn--follow': !notification.isFollowed,
-            'notification__btn--followed': notification.isFollowed,
+            'notification__btn--follow': !user.isFollowed,
+            'notification__btn--followed': user.isFollowed,
           }"
           @click.prevent="changeFollowState"
         >
-          {{ this.notification.isFollowed ? 'following' : 'follow' }}
+          {{ this.user.isFollowed ? 'following' : 'follow' }}
         </button>
       </div>
     </div>
@@ -39,7 +39,7 @@ export default {
     },
   },
   props: {
-    notification: {
+    user: {
       type: Object,
       required: true,
     },

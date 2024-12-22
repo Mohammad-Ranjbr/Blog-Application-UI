@@ -154,8 +154,6 @@ export default {
       })
       .then((response) => {
         this.posts = response.data.content;
-        console.log("2112121212121112121212");
-        console.log("User posts:", this.posts);
       })
       .catch((error) => {
         console.error('Error fetching user posts:', error);

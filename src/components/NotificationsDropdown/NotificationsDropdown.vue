@@ -13,9 +13,9 @@
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
       <notification-item
-        v-for="(notification, index) in notifications"
-        :key="index"
-        :notification="notification"
+      v-for="(user, index) in suggestions"
+                  :key="index"
+                  :user="user"
       >
       </notification-item>
     </div>
@@ -23,15 +23,37 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'NotificationsDropdown',
   data: function() {
     return {
-      notifications: require('./../../mock/Notifications/Notifications').default,
+      suggestions: [],
     };
+  },
+  methods: {
+    fetchUserSuggestions() {
+      axios
+        .get('http://localhost:8082/api/v1/users/suggestions', {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.suggestions = response.data; 
+          console.log("121212", this.suggestions)
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت کاربران پیشنهاد‌شده:', error);
+        });
+    },
   },
   components: {
     'notification-item': () => import('./../NotificationItem/NotificationItem'),
+  },
+  mounted() {
+    this.fetchUserSuggestions(); 
   },
 };
 </script>
