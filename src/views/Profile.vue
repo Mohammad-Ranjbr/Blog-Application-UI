@@ -67,7 +67,8 @@
         </div>
       </div> -->
     </div>
-    <component :is="type" :items="items"></component>
+    <profile-gallery :items="posts" />
+    <!-- <component :is="type" :items="items"></component> -->
   </div>
 </template>
 
@@ -84,8 +85,8 @@ export default {
       posts: [],
       suggestions: [],
       postsOrTagged: false,
-      galleryPosts: require('./../mock/Profile/ProfileGallery').default,
-      galleryTagged: require('./../mock/Profile/ProfileTagged').default,
+      galleryPosts: [],
+      galleryTagged: [],
       current_user: null, // اضافه کردن متغیر current_user برای ذخیره اطلاعات کاربر
     };
   },
@@ -144,6 +145,22 @@ export default {
         console.log('Error decoding token: ', err);
       }
     },
+    fetchUserPosts(userId) {
+    axios
+      .get(`http://localhost:8082/api/v1/posts/user/396465bc-494a-4eaf-b261-1032aded8409`, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        this.posts = response.data.content;
+        console.log("2112121212121112121212");
+        console.log("User posts:", this.posts);
+      })
+      .catch((error) => {
+        console.error('Error fetching user posts:', error);
+      });
+  },
     fetchUserProfile(userId) {
       axios.get(`http://localhost:8082/api/v1/users/${userId}`, {
       headers: {
@@ -160,21 +177,7 @@ export default {
         console.error('There was an error fetching the user profile:', error);
       });
     },
-    fetchUserPosts(userId) {
-    axios
-      .get(`http://localhost:8082/api/v1/posts/user/${userId}`, {
-        headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`,
-        },
-      })
-      .then((response) => {
-        this.posts = response.data.content;
-        console.log("User posts:", this.posts);
-      })
-      .catch((error) => {
-        console.error('Error fetching user posts:', error);
-      });
-  },
+    
   },
   computed: {
     type: function() {
@@ -185,6 +188,7 @@ export default {
     },
   },
   mounted() {
+    this.fetchUserPosts();
     this.fetchUserSuggestions(); 
     this.decode();
   },

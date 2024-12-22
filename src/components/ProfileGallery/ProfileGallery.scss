@@ -128,6 +128,8 @@ img {
   margin: 10px;
   color: $white;
   cursor: pointer;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .gallery-item:hover .gallery-item-info,

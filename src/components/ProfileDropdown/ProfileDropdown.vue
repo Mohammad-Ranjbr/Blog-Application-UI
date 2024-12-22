@@ -12,7 +12,7 @@
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-      <router-link :to="{ name: 'Profile', params: { id: userId } }">
+      <router-link :to="{ name: 'Profile', params: { id: userId } }" class="dropdown-item" >
         <img
           src="./../../assets/svgs/avatar.svg"
           alt="avatar image"

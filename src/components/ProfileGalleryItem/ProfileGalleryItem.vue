@@ -1,6 +1,7 @@
 <template>
   <div class="gallery-item" tabindex="0">
-    <img :src="item.img" class="gallery-image" :alt="item.alt" />
+    <img :src="item.image ? `data:image/jpeg;base64,${item.image}` : 'default-image.jpg'"
+     class="gallery-image" :alt="item.alt" />
 
     <div class="gallery-item-type" v-if="item.hasType">
       <span class="visually-hidden">{{ item.type }}</span>
@@ -16,7 +17,7 @@
 
         <li class="gallery-item-comments">
           <span class="visually-hidden">Comments:</span
-          ><i class="fa fa-comment" aria-hidden="true"></i> {{ item.comments }}
+          ><i class="fa fa-comment" aria-hidden="true"></i> {{ item.comments.length }}
         </li>
       </ul>
     </div>

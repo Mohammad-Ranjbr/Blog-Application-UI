@@ -6,15 +6,12 @@
     <!-- نمایش اطلاعات درباره کاربر -->
     <ul class="profile-desc__info">
       <li>
-        <span class="profile-desc__label">👤 </span> 
         <span class="profile-desc__value">{{ name || 'Not provided' }}</span>
       </li>
       <li>
-        <span class="profile-desc__label">📧  </span> 
         <span class="profile-desc__value">{{ email || 'Not provided' }}</span>
       </li>
       <li>
-        <span class="profile-desc__label">📝 </span> 
         <span class="profile-desc__value">{{ about || 'No details available' }}</span>
       </li>
     </ul>

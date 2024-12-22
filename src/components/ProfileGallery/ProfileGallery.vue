@@ -1,9 +1,9 @@
 <template>
   <div class="gallery-container">
     <div class="gallery" v-if="items">
-      <gallery-item v-for="(item, index) in items" :key="index" :item="item"></gallery-item>
+      <gallery-item v-for="(item, index) in items" :key="index" :item="item" />
     </div>
-    <div class="loader"></div>
+    <div v-if="!items.length" class="loader"></div>
   </div>
 </template>
 
@@ -21,6 +21,9 @@ export default {
   },
   components: {
     'gallery-item': () => import('./../ProfileGalleryItem/ProfileGalleryItem'),
+  },
+  methods: {
+    
   },
 };
 </script>
