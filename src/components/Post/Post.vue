@@ -97,7 +97,7 @@ export default {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    border: 1px solid $light-gray;
+    border: 1px solid rgb(80, 141, 233);
     background-color: $white;
     padding: 1px;
   }

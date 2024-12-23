@@ -7,9 +7,11 @@
         class="suggestion__user-img"
         draggable="false"
       />
-
+     
       <div class="suggestion__info">
-        <div class="suggestion__username">{{ user.userName }}</div>
+        <a :href="`/profile/${user.id}`" class="suggestion__username">
+          <span>{{ user.userName }}</span>
+        </a>
         <span class="suggestion__relation">{{ user.name }}</span>
       </div>
     </div>
@@ -33,11 +35,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+
 .suggestion {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 0.5rem;
+
+  &__info {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 4px;
+  }
+
+  &__username {
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $main-color;
+      text-decoration: none;
+    }
+  }
+
+  &__relation {
+    color: $dark-gray;
+    font-size: 12px; /* اندازه مناسب برای نمایش */
+    font-weight: 400;
+  }
 
   &__left {
     display: flex;
@@ -45,11 +75,6 @@ export default {
     align-items: center;
     width: 6rem;
     margin-right: 134px;
-  }
-
-  &__relation {
-    color: $dark-gray;
-    font-size: 80%;
   }
 
   &__user-img {
