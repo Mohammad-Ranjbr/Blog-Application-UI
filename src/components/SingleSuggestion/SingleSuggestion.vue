@@ -65,7 +65,7 @@ export default {
 
   &__relation {
     color: $dark-gray;
-    font-size: 12px; /* اندازه مناسب برای نمایش */
+    font-size: 12px;
     font-weight: 400;
   }
 
