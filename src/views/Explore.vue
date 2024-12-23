@@ -10,7 +10,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'ProfileGallery',
+  name: 'Explore',
   data: function() {
     return {
       items: []
