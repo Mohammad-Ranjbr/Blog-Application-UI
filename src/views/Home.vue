@@ -13,7 +13,6 @@
 
 <script>
 import axios from 'axios';
-import VueJwtDecode from 'vue-jwt-decode';
 
 export default {
   name: 'Home',
@@ -27,38 +26,20 @@ export default {
     this.decode();
   },
   methods: {
-    decode() {
-      let token = localStorage.getItem('accessToken');
-      console.log(token)
-      try {
-        if (token) {
-          let decoded = VueJwtDecode.decode(token);
-          this.current_user = decoded;
-          console.log('Decoded user:', this.current_user.id);
-          localStorage.setItem('userId', this.current_user.id);
-          localStorage.setItem('accessToken', token);
-
-        } else {
-          console.log('Token is null or undefined');
-        }
-      } catch (err) {
-        console.log('Error decoding token: ', err);
-      }
-    },
     fetchHomePosts() {
-    axios
-      .get(`http://localhost:8082/api/v1/posts/home-posts`, {
-        headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`,
-        },
-      })
-      .then((response) => {
-        this.posts = response.data;
-      })
-      .catch((error) => {
-        console.error('Error fetching user posts:', error);
-      });
-  }
+      axios
+        .get(`http://localhost:8082/api/v1/posts/home-posts`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.posts = response.data;
+        })
+        .catch((error) => {
+          console.error('Error fetching user posts:', error);
+        });
+    }
   },
   components: {
     newsfeed: () => import('./../components/Newsfeed/Newsfeed'),

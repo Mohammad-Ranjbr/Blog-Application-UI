@@ -70,6 +70,7 @@ export default {
     logout: function() {
       window.localStorage.removeItem('accessToken');
       window.localStorage.removeItem('user');
+      window.localStorage.removeItem('userId');
       window.location.reload();
     },
     fetchUserProfile(userId) {

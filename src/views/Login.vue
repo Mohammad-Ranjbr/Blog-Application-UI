@@ -74,6 +74,7 @@
 
 <script>
 import axios from 'axios';
+import VueJwtDecode from 'vue-jwt-decode';
 
 export default {
   name: 'Login',
@@ -100,6 +101,9 @@ export default {
 
         localStorage.setItem('accessToken', access_token);
 
+        let decoded = VueJwtDecode.decode(access_token);
+        localStorage.setItem('userId', decoded.id);
+
         window.location = '/';
       } catch (err) {
         if (err.response && err.response.data && err.response.data.message) {
@@ -108,7 +112,7 @@ export default {
           this.errMessage = 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.';
         }
       }
-    },
+    }
   },
 };
 </script>
