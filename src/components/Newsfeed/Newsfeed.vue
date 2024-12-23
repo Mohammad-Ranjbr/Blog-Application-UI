@@ -1,6 +1,6 @@
 <template>
   <div class="newsfeed">
-    <post v-for="(post, index) in posts" :key="index" :post="post" :comments="comments"></post>
+    <post v-for="(post, index) in posts" :key="index" :post="post" :comments="post.comments"></post>
   </div>
 </template>
 <script>
@@ -15,7 +15,7 @@ export default {
   data: function() {
     return {
       posts: [],
-      comments: require('./../../mock/Home/Comments').default,
+      comments: [],
     };
   },
   methods: {},

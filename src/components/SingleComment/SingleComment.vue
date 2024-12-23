@@ -2,9 +2,9 @@
   <div class="comment">
     <div class="comment__content">
       <a href="/">
-        <span>{{ comment.commenter }}</span>
+        <span>{{ comment.user.userName }}</span>
       </a>
-      {{ comment.comment }}
+      {{ comment.content }}
     </div>
 
     <div class="comment__like-action">
