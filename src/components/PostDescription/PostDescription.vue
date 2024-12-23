@@ -1,6 +1,9 @@
 <template>
   <div class="post-description">
     <span>{{ title }}</span> </br> {{ content }}
+    </br><section class="post-description__post-time">
+      {{ created_at }}
+    </section>
     <hr />
   </div>
 </template>
@@ -17,6 +20,10 @@ export default {
       type: String,
       required: true,
     },
+    created_at: {
+      type: String,
+      required: true,
+    }
   },
 };
 </script>
@@ -26,7 +33,14 @@ export default {
   padding-left: 1rem;
   padding-right: 1rem;
 
+  &__post-time {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: $dark-gray;
+  }
+
   & > span {
+    font-size: 17px;
     font-weight: 700;
   }
 

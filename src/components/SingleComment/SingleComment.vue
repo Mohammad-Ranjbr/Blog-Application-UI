@@ -1,12 +1,10 @@
 <template>
   <div class="comment">
-    <div class="comment__content">
-      <a href="/">
-        <span>{{ comment.user.userName }}</span>
-      </a>
-      {{ comment.content }}
+    <div class="comment_content" >
+      <div class="comment_creator">{{ comment.user.userName }}</div>
+      <div class="comment_message">{{ comment.content }}</div> 
     </div>
-
+    
     <div class="comment__like-action">
       <a class="like-post">
         <img :src="likedImg" class="icon" @click="changeLikeState" draggable="false" />
@@ -55,7 +53,7 @@ export default {
   &__like-action {
     padding-left: 5px;
   }
-
+ 
   span {
     font-weight: 600;
     color: $black;
@@ -66,6 +64,19 @@ export default {
     text-decoration: none;
   }
 }
+.comment_content{
+    display: flex;
+    flex-direction: row;
+    align-Items:center
+  }
+  .comment_creator{
+     font-weight: 600;
+  }
+  .comment_message{
+    font-size: 15px;
+     font-weight: 200;
+     margin-left: 0.6rem;
+  }
 
 .icon {
   width: $font-size-3x;

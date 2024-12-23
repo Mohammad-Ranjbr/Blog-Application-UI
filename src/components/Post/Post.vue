@@ -44,7 +44,8 @@
 
     <post-action></post-action>
     <div class="post__likes">{{ post.likes }} likes</div>
-    <post-description :title="post.title" :content="post.content"></post-description>
+    
+    <post-description :title="post.title" :content="post.content" :created_at="post.creationDate"></post-description>
     <post-comments :comments="comments"></post-comments>
   </div>
 </template>

@@ -1,10 +1,6 @@
 <template>
   <div class="comments">
     <comment v-for="(comment, index) in comments" :key="index" :comment="comment"></comment>
-
-    <section class="comments__post-time">
-      2 HOURS AGO
-    </section>
     <section>
       <form class="comments__leave-comment">
         <textarea
@@ -47,12 +43,6 @@ export default {
 <style lang="scss" scoped>
 .comments {
   padding-left: 1rem;
-
-  &__post-time {
-    font-size: 0.8rem;
-    color: $dark-gray;
-    padding-bottom: 0.5rem;
-  }
 
   &__leave-comment {
     display: flex;
