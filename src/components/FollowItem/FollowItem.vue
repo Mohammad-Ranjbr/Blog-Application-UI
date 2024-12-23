@@ -7,9 +7,11 @@
           class="follow-item__icon"
         />
 
-    <div class="follow-item__right">
+        <div class="follow-item__right">
       <div class="follow-item__info">
-        <div class="follow-item__username">{{ user.name }}</div>
+        <div class="follow-item__username">
+          <a :href="`/profile/${user.id}`" class="follow-item__name-link">{{ user.name }}</a>
+        </div>
         <div class="follow-item__nickname">
           {{ user.userName }}
         </div>
@@ -71,5 +73,19 @@ export default {
     font-size: $font-size-2x;
     height: 32px;
   }
+
+  &__name-link {
+    color: black;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $main-color;
+      text-decoration: none;
+    }
+  }
+
 }
 </style>

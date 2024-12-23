@@ -15,7 +15,7 @@
       </div>
 
       <div class="suggestions-item__name">
-        {{ user.name }}
+        <a :href="`/profile/${user.id}`" class="suggestions-item__name-link">{{ user.name }}</a>
       </div>
 
       <div class="suggestions-item__subname">
@@ -95,5 +95,17 @@ export default {
     padding: 3px 40px;
     text-align: center;
   }
+  &__name-link {
+    color: black; 
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $main-color;
+      text-decoration: none;
+    }
+  }
+
 }
 </style>

@@ -4,7 +4,9 @@
 
     <div class="notification__right">
       <div class="notification__info">
-        <div class="user">{{ user.name }}</div>
+        <a :href="`/profile/${user.id}`" class="user">
+          {{ user.name }}
+        </a>
 
         <div class="notification__description">
           {{ user.userName }}
@@ -96,5 +98,19 @@ export default {
   &__info {
     margin-left: 8px;
   }
+
+.user {
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $main-color;
+    text-decoration: none;
+  }
+}
+
 }
 </style>
