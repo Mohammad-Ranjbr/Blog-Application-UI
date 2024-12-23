@@ -2,13 +2,15 @@
   <div class="post-description">
     <span>{{ title }}</span> </br> {{ content }}
     </br><section class="post-description__post-time">
-      {{ created_at }}
+      {{ formattedTime }}
     </section>
     <hr />
   </div>
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: 'PostDescription',
   props: {
@@ -24,6 +26,11 @@ export default {
       type: String,
       required: true,
     }
+  },
+  computed: {
+    formattedTime() {
+      return moment(this.created_at).fromNow();
+    },
   },
 };
 </script>

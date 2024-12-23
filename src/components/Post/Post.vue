@@ -80,6 +80,8 @@ export default {
   background: $white;
   margin-bottom: 60px;
   border: 1px solid $lighter-gray;
+  border-radius: 10px;
+  overflow: hidden;
 
   &__upper {
     padding: 10px 15px;
