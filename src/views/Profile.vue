@@ -4,7 +4,7 @@
     <!-- <profile-stories></profile-stories> -->
 
     
-    <div class="suggestions" style="margin-top: 30px;">
+    <div v-if="isCurrentUserProfile" class="suggestions" style="margin-top: 30px;">
       <div class="direc direc--left" @click="scroll_left">
         <img src="./../assets/left-arrow.png" alt="left arrow" class="arrow" />
       </div>
@@ -98,6 +98,13 @@ export default {
     'follow-item': () => import('./../components/FollowItem/FollowItem'),
   },
   methods: {
+    fetchUserData() {
+      const userId = this.$route.params.id;
+      this.decode();
+      this.fetchUserProfile(userId);
+      this.fetchUserPosts(userId);
+      this.fetchUserSuggestions();
+    },
     fetchUserSuggestions() {
       axios
         .get('http://localhost:8082/api/v1/users/suggestions', {
@@ -110,7 +117,8 @@ export default {
     
         })
         .catch((error) => {
-          console.error('خطا در دریافت کاربران پیشنهاد‌شده:', error);
+          console.error('There was an error fetching the user suggestion:', error);
+        this.$router.push('/notfound');
         });
     },
     scroll_left() {
@@ -143,12 +151,12 @@ export default {
         }
       } catch (err) {
         console.log('Error decoding token: ', err);
+        this.$router.push('/notfound');
       }
     },
-    fetchUserPosts() {
-      let userid = localStorage.getItem('userId');
+    fetchUserPosts(userId) {
     axios
-      .get(`http://localhost:8082/api/v1/posts/user/${userid}`, {
+      .get(`http://localhost:8082/api/v1/posts/user/${userId}`, {
         headers: {
           Authorization: `${localStorage.getItem('accessToken')}`,
         },
@@ -158,6 +166,7 @@ export default {
       })
       .catch((error) => {
         console.error('Error fetching user posts:', error);
+        this.$router.push('/notfound');
       });
     },
     fetchUserProfile(userId) {
@@ -174,6 +183,7 @@ export default {
       })
       .catch(error => {
         console.error('There was an error fetching the user profile:', error);
+        this.$router.push('/notfound');
       });
     },
     
@@ -185,11 +195,23 @@ export default {
     items: function() {
       return this.postsOrTagged ? this.galleryPosts : this.galleryTagged;
     },
+    isCurrentUserProfile() {
+      const userIdFromRoute = this.$route.params.id;
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        const decoded = VueJwtDecode.decode(token);
+        return decoded.id === userIdFromRoute;
+      }
+      return false;
+    },
   },
   mounted() {
-    this.fetchUserPosts();
-    this.fetchUserSuggestions(); 
-    this.decode();
+    this.fetchUserData();
+  },
+  watch: {
+    '$route.params.id': function () {
+      this.fetchUserData();
+    },
   },
 
 };

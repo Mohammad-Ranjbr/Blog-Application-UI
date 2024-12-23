@@ -3,7 +3,7 @@
     <div class="post__upper">
       <img :src="post.user.image ? `data:image/jpeg;base64,${post.user.image}` : 'default-image.jpg'"
        alt="owner" class="post__owner-img" draggable="false" />
-      <a href="/profile" class="post__owner align-middle">
+      <a :href="`/profile/${post.user.id}`" class="post__owner align-middle">
         <span>{{ post.user.name }}</span>
       </a>
 
@@ -43,9 +43,12 @@
     </div>
 
     <post-action></post-action>
-    <div class="post__likes">{{ post.likes }} likes</div>
-    
-    <post-description :title="post.title" :content="post.content" :created_at="post.creationDate"></post-description>
+    <div class="post__action-box">
+      <div class="post__likes">{{ post.likes }} likes</div>
+      <div class="post__category">{{ post.category.title }}</div>
+    </div>
+    <post-description :title="post.title" :content="post.content" :created_at="post.creationDate"
+    ></post-description>
     <post-comments :comments="comments"></post-comments>
   </div>
 </template>
@@ -76,6 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .post {
   background: $white;
   margin-bottom: 60px;
@@ -83,11 +87,12 @@ export default {
   border-radius: 10px;
   overflow: hidden;
 
+  
   &__upper {
     padding: 10px 15px;
     border-bottom: 1px solid $lighter-gray;
   }
-
+  
   &__owner-img {
     width: 32px;
     height: 32px;
@@ -96,31 +101,46 @@ export default {
     background-color: $white;
     padding: 1px;
   }
-
+  
   &__owner {
     margin-left: 10px;
     color: black;
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0px;
-
+    
     &:hover {
       text-decoration: none;
       color: $main-color;
     }
   }
-
+  
   &__options-menu {
     border: none;
     background: transparent;
     float: right;
     margin-top: 5px;
-
+    
     &:focus {
       outline: 0;
     }
   }
-
+  &__action-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.2rem;
+  }
+  &__category {
+    display: inline-block;
+    background-color: #6bd5ee59; 
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px; 
+    margin-bottom: 0.5rem;
+  }
   &__likes {
     padding-left: 1rem;
     font-weight: 600;

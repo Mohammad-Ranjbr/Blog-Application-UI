@@ -25,7 +25,7 @@ export default {
     created_at: {
       type: String,
       required: true,
-    }
+    },
   },
   computed: {
     formattedTime() {

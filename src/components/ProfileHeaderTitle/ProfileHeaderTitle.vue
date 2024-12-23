@@ -3,7 +3,7 @@
     <div class="header__first">
       <div class="header__username">{{userProfile.username}}</div>
 
-      <div class="header__actions">
+      <div v-if="isCurrentUserProfile" class="header__actions">
         <button class="header__action-btn">Message</button>
 
         <button class="header__action-btn">
@@ -125,6 +125,12 @@ export default {
   },
 
   methods: {
+    fetchUserData() {
+      const userId = this.$route.params.id;;
+      this.fetchUserProfile(userId);
+      this.fetchUserFollowers(userId);
+      this.fetchUserFollowing(userId);
+    },
     fetchUserProfile(userId) {
       axios
         .get(`http://localhost:8082/api/v1/users/${userId}`, {
@@ -139,6 +145,7 @@ export default {
             this.userProfile = {
               image: userProfile.image || '',
               username: userProfile.userName || 'Unknown',
+              name: userProfile.name || '',
               postsCount: userProfile.postsCount || 0,
               followersCount: userProfile.followersCount || 0,
               followingCount: userProfile.followingCount || 0,
@@ -176,18 +183,28 @@ export default {
         .catch((error) => {
           console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
         });
-    }
+    },
   },
- 
+  computed: {
+    isCurrentUserProfile() {
+      const userIdFromRoute = this.$route.params.id;
+      const userIdInLocalStorage = localStorage.getItem('userId');
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        return userIdInLocalStorage === userIdFromRoute;
+      }
+      return false;
+    },
+  },
   mounted() {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      this.fetchUserProfile(userId);
-      this.fetchUserFollowers(userId);
-      this.fetchUserFollowing(userId);
-    }
+    this.fetchUserData();
   },
- 
+  watch: {
+    '$route.params.id': function () {
+      this.fetchUserData();
+    },
+  },
+
 };
 </script>
 

@@ -38,6 +38,10 @@ export default {
     };
   },
   methods: {
+    fetchUserData() {
+      const userId = this.$route.params.id;
+      this.fetchUserProfile(userId);
+    },
     fetchUserProfile(userId) {
       axios
         .get(`http://localhost:8082/api/v1/users/${userId}`, {
@@ -68,10 +72,12 @@ export default {
     profileDescription,
   },
   mounted() {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      this.fetchUserProfile(userId);
-    }
+    this.fetchUserData();
+  },
+  watch: {
+    '$route.params.id': function () {
+      this.fetchUserData();
+    },
   },
 };
 </script>
