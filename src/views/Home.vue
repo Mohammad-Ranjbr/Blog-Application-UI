@@ -54,7 +54,6 @@ export default {
       })
       .then((response) => {
         this.posts = response.data;
-        console.log("asasasasas", this.posts);
       })
       .catch((error) => {
         console.error('Error fetching user posts:', error);

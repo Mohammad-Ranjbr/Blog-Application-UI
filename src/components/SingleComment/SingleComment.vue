@@ -67,15 +67,16 @@ export default {
 .comment_content{
     display: flex;
     flex-direction: row;
-    align-Items:center
+    align-Items:start
   }
   .comment_creator{
      font-weight: 600;
   }
   .comment_message{
     font-size: 15px;
-     font-weight: 200;
-     margin-left: 0.6rem;
+    font-weight: 200;
+    margin-left: 0.6rem;
+    height: fit-content;
   }
 
 .icon {

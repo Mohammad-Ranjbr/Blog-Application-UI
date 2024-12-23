@@ -53,9 +53,9 @@
 
             <div class="modal-body">
               <follow-item
-                v-for="(following, index) in listOfFollowers"
+                v-for="(user, index) in listOfFollowers"
                 :key="index"
-                :following="following"
+                :user="user"
               ></follow-item>
             </div>
           </div>
@@ -89,9 +89,9 @@
 
             <div class="modal-body">
               <follow-item
-                v-for="(following, index) in listOfFollowing"
+                v-for="(user, index) in listOfFollowing"
                 :key="index"
-                :following="following"
+                :user="user"
               ></follow-item>
             </div>
           </div>
@@ -108,8 +108,8 @@ export default {
  
   data: function() {
     return {
-      listOfFollowers: require('./../../mock/Profile/ListOfFollowers').default,
-      listOfFollowing: require('./../../mock/Profile/ListOfFollowers').default,
+      listOfFollowers: [],
+      listOfFollowing: [],
       userProfile: {
         image: '',
         username: null,
@@ -124,41 +124,67 @@ export default {
     'follow-item': () => import('./../FollowItem/FollowItem'),
   },
 
-
-
-
- 
   methods: {
     fetchUserProfile(userId) {
-  axios
-    .get(`http://localhost:8082/api/v1/users/${userId}`, {
-      headers: {
-        Authorization: `${localStorage.getItem('accessToken')}`,
-      },
-    })
-    .then((response) => {
-      console.log('Response Data:', response.data); // بررسی داده‌ها
-      if (response.data) {
-        const userProfile = response.data;
-        this.userProfile = {
-          image: userProfile.image || '',
-          username: userProfile.userName || 'Unknown', // استفاده از مقدار پیش‌فرض در صورت نبود داده
-          postsCount: userProfile.postsCount || 0,
-          followersCount: userProfile.followersCount || 0,
-          followingCount: userProfile.followingCount || 0,
-        };
-      }
-    })
-    .catch((error) => {
-      console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
-    });
-}
+      axios
+        .get(`http://localhost:8082/api/v1/users/${userId}`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          console.log('Response Data:', response.data); 
+          if (response.data) {
+            const userProfile = response.data;
+            this.userProfile = {
+              image: userProfile.image || '',
+              username: userProfile.userName || 'Unknown',
+              postsCount: userProfile.postsCount || 0,
+              followersCount: userProfile.followersCount || 0,
+              followingCount: userProfile.followingCount || 0,
+            };
+          }
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
+        });
+    },
+    fetchUserFollowers(userId) {
+      axios
+        .get(`http://localhost:8082/api/v1/users/${userId}/followers`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.listOfFollowers = response.data;
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
+        });
+    },
+    fetchUserFollowing(userId) {
+      axios
+        .get(`http://localhost:8082/api/v1/users/${userId}/following`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.listOfFollowing = response.data;
+        })
+        .catch((error) => {
+          console.error('خطا در دریافت اطلاعات پروفایل کاربر:', error);
+        });
+    }
   },
  
   mounted() {
     const userId = localStorage.getItem('userId');
     if (userId) {
       this.fetchUserProfile(userId);
+      this.fetchUserFollowers(userId);
+      this.fetchUserFollowing(userId);
     }
   },
  

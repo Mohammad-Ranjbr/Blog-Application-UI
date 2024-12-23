@@ -87,7 +87,7 @@ export default {
       postsOrTagged: false,
       galleryPosts: [],
       galleryTagged: [],
-      current_user: null, // اضافه کردن متغیر current_user برای ذخیره اطلاعات کاربر
+      current_user: null,
     };
   },
   components: {
