@@ -6,9 +6,15 @@
 <script>
 export default {
   name: 'Newsfeed',
+  props: {
+    posts: {
+      type: Array, 
+      required: true,
+    },
+  },
   data: function() {
     return {
-      posts: require('./../../mock/Home/Posts').default,
+      posts: [],
       comments: require('./../../mock/Home/Comments').default,
     };
   },

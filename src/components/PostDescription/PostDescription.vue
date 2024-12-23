@@ -1,6 +1,6 @@
 <template>
   <div class="post-description">
-    <span>{{ writer }}</span> {{ description }}
+    <span>{{ title }}</span> </br> {{ content }}
     <hr />
   </div>
 </template>
@@ -9,11 +9,11 @@
 export default {
   name: 'PostDescription',
   props: {
-    description: {
+    content: {
       type: String,
       required: true,
     },
-    writer: {
+    title: {
       type: String,
       required: true,
     },

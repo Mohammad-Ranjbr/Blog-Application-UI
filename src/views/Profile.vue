@@ -159,7 +159,7 @@ export default {
       .catch((error) => {
         console.error('Error fetching user posts:', error);
       });
-  },
+    },
     fetchUserProfile(userId) {
       axios.get(`http://localhost:8082/api/v1/users/${userId}`, {
       headers: {

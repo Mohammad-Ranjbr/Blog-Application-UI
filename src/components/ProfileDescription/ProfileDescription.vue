@@ -1,9 +1,6 @@
 <template>
   <div class="profile-desc">
-    <!-- نمایش نام کاربری -->
     <h1 class="profile-desc__username">{{ username }}</h1>
-
-    <!-- نمایش اطلاعات درباره کاربر -->
     <ul class="profile-desc__info">
       <li>
         <span class="profile-desc__value">{{ name || 'Not provided' }}</span>
@@ -12,11 +9,6 @@
         <span class="profile-desc__value">{{ about || 'No details available' }}</span>
       </li>
     </ul>
-
-    <!-- <div class="profile-desc__friends-follow">
-      Followed by
-      <span> <a href="/">abdallah_hemdan</a> </span>, <span><a href="/">omar_ahmed</a></span>
-    </div> -->
   </div>
 </template>
 

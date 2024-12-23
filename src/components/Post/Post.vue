@@ -1,9 +1,10 @@
 <template>
   <div class="post">
     <div class="post__upper">
-      <img src="./../../assets/me.jpg" alt="owner" class="post__owner-img" draggable="false" />
+      <img :src="post.user.image ? `data:image/jpeg;base64,${post.user.image}` : 'default-image.jpg'"
+       alt="owner" class="post__owner-img" draggable="false" />
       <a href="/profile" class="post__owner align-middle">
-        <span>{{ post.creator }}</span>
+        <span>{{ post.user.name }}</span>
       </a>
 
       <button class="post__options-menu" data-toggle="modal" data-target="#exampleModalCenter">
@@ -36,14 +37,14 @@
         class="post__main-img"
         alt="main post"
         draggable="false"
-        :src="post.mainImg"
+        :src="post.image ? `data:image/jpeg;base64,${post.image}` : 'default-image.jpg'"
         onDoubleClick="{this.handleLikePost}"
       />
     </div>
 
     <post-action></post-action>
-    <div class="post__likes">78 likes</div>
-    <post-description :writer="post.creator" :description="post.description"></post-description>
+    <div class="post__likes">{{ post.likes }} likes</div>
+    <post-description :title="post.title" :content="post.content"></post-description>
     <post-comments :comments="comments"></post-comments>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div class="home container">
     <div class="home__left">
       <home-stories></home-stories>
-      <newsfeed></newsfeed>
+      <newsfeed :posts="posts"></newsfeed>
     </div>
 
     <div class="home__right">
@@ -12,12 +12,14 @@
 </template>
 
 <script>
+import axios from 'axios';
 import VueJwtDecode from 'vue-jwt-decode';
 
 export default {
   name: 'Home',
   data: function() {
     return {
+      posts: [],
       current_user: null
     };
   },
@@ -42,12 +44,29 @@ export default {
       } catch (err) {
         console.log('Error decoding token: ', err);
       }
-    }
+    },
+    fetchHomePosts() {
+    axios
+      .get(`http://localhost:8082/api/v1/posts/home-posts`, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        this.posts = response.data;
+        console.log("asasasasas", this.posts);
+      })
+      .catch((error) => {
+        console.error('Error fetching user posts:', error);
+      });
+  }
   },
   components: {
     newsfeed: () => import('./../components/Newsfeed/Newsfeed'),
     'user-suggestions': () => import('./../components/UserSuggestions/UserSuggestions'),
-    // 'home-stories': () => import('./../components/HomeStories/HomeStories'),
+  },
+  mounted() {
+    this.fetchHomePosts(); 
   },
 };
 </script>
