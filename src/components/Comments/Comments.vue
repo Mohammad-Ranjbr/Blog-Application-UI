@@ -2,7 +2,7 @@
   <div class="comments">
     <comment v-for="(comment, index) in comments" :key="index" :comment="comment"></comment>
     <section>
-      <form class="comments__leave-comment">
+      <form class="comments__leave-comment" @submit.prevent="postComment">
         <textarea
           name="comment"
           placeholder="Add a comment ..."
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Comments',
   components: {
@@ -31,12 +33,45 @@ export default {
       type: Array,
       required: true,
     },
+    postId: {
+      type: Number,
+      required: true,
+    },
+    userId: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
     commentTyped: function() {
       return this.commentMessage.length ? true : false;
     },
   },
+  methods: {
+    postComment() {
+      if (!this.commentMessage.trim()) return;
+
+      const commentData = {
+      content: this.commentMessage,
+      parent: null,
+    };
+
+      axios
+        .post(`http://localhost:8082/api/v1/comments/post/${this.postId}/user/${this.userId}`, commentData, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          const newComment = response.data;
+          this.comments.unshift(newComment);
+          this.commentMessage = '';
+        })
+        .catch((error) => {
+          console.error('Error posting comment:', error);
+        });
+    },
+  }
 };
 </script>
 

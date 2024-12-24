@@ -49,7 +49,7 @@
     </div>
     <post-description :title="post.title" :content="post.content" :created_at="post.creationDate"
     ></post-description>
-    <post-comments :comments="comments"></post-comments>
+    <post-comments :comments="comments" :post-id="post.id" :user-id="userId"></post-comments>
   </div>
 </template>
 
@@ -57,7 +57,7 @@
 export default {
   name: 'Post',
   data: function() {
-    return {};
+    userId: null;
   },
   methods: {},
   props: {
@@ -69,6 +69,12 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  created() {
+    this.userId = localStorage.getItem('userId');
+    if (!this.userId) {
+      console.error('User ID not found in localStorage');
+    }
   },
   components: {
     'post-action': () => import('./../PostAction/PostAction'),
