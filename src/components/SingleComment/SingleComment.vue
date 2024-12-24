@@ -154,20 +154,45 @@ export default {
 
   .comment__edit-textarea {
     width: 100%;
-    height: 100px;
+    height: 80px;
     padding: 8px;
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    margin-bottom: 10px;
+    margin-left: 10px;
     resize: none;
+    box-sizing: border-box;
   }
 
   .comment__save-edit,
   .comment__cancel-edit {
-    margin-top: 10px;
-    padding: 5px 10px;
-    font-size: 14px;
+    padding: 6px 9px;
+    font-size: 12px;
     cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .comment__save-edit {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .comment__save-edit:hover {
+    background-color: #45a049;
+  }
+
+  .comment__cancel-edit {
+    background-color: #f44336;
+    color: white;
+  }
+
+  .comment__cancel-edit:hover {
+    background-color: #e53935;
   }
 
 }
@@ -176,15 +201,18 @@ export default {
     flex-direction: row;
     align-Items:start
   }
-  .comment_creator{
-     font-weight: 600;
+  .comment_creator {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 5px;
   }
-  .comment_message{
-    font-size: 15px;
-    font-weight: 200;
-    margin-left: 0.6rem;
-    height: fit-content;
-  }
+
+.comment_message {
+  font-size: 15px;
+  font-weight: 200;
+  margin-left: 0.6rem;
+  margin-bottom: 10px;
+}
 
 .icon {
   width: $font-size-3x;
