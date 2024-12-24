@@ -88,7 +88,20 @@ export default {
     },
     deleteComment() {
       if (confirm('Are you sure you want to delete this comment?')) {
-        alert('Deleting comment: ' + this.comment.id);
+        axios
+          .delete(`http://localhost:8082/api/v1/comments/${this.comment.id}`, {
+            headers: {
+              Authorization: `${localStorage.getItem('accessToken')}`,
+            },
+          })
+          .then(() => {
+            this.$emit('commentDeleted', this.comment.id);
+            alert('Comment deleted successfully!');
+          })
+          .catch((error) => {
+            console.error('Error deleting comment:', error);
+            alert('Failed to delete the comment.');
+          });
       }
     },
   },

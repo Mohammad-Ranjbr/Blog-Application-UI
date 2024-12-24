@@ -1,6 +1,6 @@
 <template>
   <div class="comments">
-    <comment v-for="(comment, index) in comments" :key="index" :comment="comment"></comment>
+    <comment v-for="(comment, index) in comments" :key="index" :comment="comment" @commentDeleted="handleCommentDeleted"></comment>
     <section>
       <form class="comments__leave-comment" @submit.prevent="postComment">
         <textarea
@@ -26,6 +26,7 @@ export default {
   data: function() {
     return {
       commentMessage: '',
+      comments: []
     };
   },
   props: {
@@ -71,6 +72,23 @@ export default {
           console.error('Error posting comment:', error);
         });
     },
+    handleCommentDeleted(commentId) {
+      this.comments = this.comments.filter((comment) => comment.id !== commentId);
+    },
+    mounted() {
+    axios
+      .get('http://localhost:8082/api/v1/comments/${this.postId}', {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        this.comments = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching comments:', error);
+      });
+  },
   }
 };
 </script>
