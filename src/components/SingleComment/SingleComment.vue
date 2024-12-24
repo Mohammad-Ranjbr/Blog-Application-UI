@@ -2,9 +2,16 @@
   <div class="comment" @mouseenter="showOptions = true" @mouseleave="showOptions = false">
     <div class="comment_content">
       <div class="comment_creator">{{ comment.user.userName }}</div>
-      <div class="comment_message">{{ comment.content }}</div>
+
+      <div v-if="isEditing">
+        <textarea v-model="editedContent" class="comment__edit-textarea"></textarea>
+        <button @click="saveEdit" class="comment__save-edit">Save</button>
+        <button @click="cancelEdit" class="comment__cancel-edit">Cancel</button>
+      </div>
+      
+      <div v-else class="comment_message">{{ comment.content }}</div>
     </div>
-    
+
     <div class="comment__options">
           <div v-if="isCommentOwner && showOptions" class="comment__options">
             <button class="comment__edit" @click="editComment">
@@ -22,12 +29,16 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'SingleComment',
   data: function() {
     return {
       liked: false,
       showOptions: false,
+      isEditing: false,
+      editedContent: '',
     };
   },
   props: {
@@ -44,7 +55,6 @@ export default {
     },
     isCommentOwner: function () {
       const userId = localStorage.getItem('userId');
-      console.log('Current User ID:', userId, 'Comment User ID:', this.comment.user.id);
       return userId && userId === this.comment.user.id.toString();
     },
   },
@@ -53,7 +63,28 @@ export default {
       this.liked = !this.liked;
     },
     editComment() {
-      alert('Editing comment: ' + this.comment.id);
+      this.isEditing = true;
+      this.editedContent = this.comment.content;
+    },
+    saveEdit() {
+      axios.put(`http://localhost:8082/api/v1/comments/${this.comment.id}`, {
+          content: this.editedContent,
+        }, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+      .then(response => {
+        this.comment.content = this.editedContent; 
+        this.isEditing = false; 
+      })
+      .catch(error => {
+        console.error('There was an error updating the comment:', error);
+        alert('Failed to update comment');
+      });
+    },
+    cancelEdit() {
+      this.isEditing = false;
     },
     deleteComment() {
       if (confirm('Are you sure you want to delete this comment?')) {
@@ -84,6 +115,7 @@ export default {
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    outline: none;
   }
 
   &__edit:hover img {
@@ -119,6 +151,25 @@ export default {
   .comment__like:hover img {
     transform: scale(1.2);
   }
+
+  .comment__edit-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+  }
+
+  .comment__save-edit,
+  .comment__cancel-edit {
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
 }
 .comment_content{
     display: flex;
