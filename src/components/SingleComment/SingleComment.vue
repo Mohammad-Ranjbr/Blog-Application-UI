@@ -30,6 +30,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   name: 'SingleComment',
@@ -87,22 +88,44 @@ export default {
       this.isEditing = false;
     },
     deleteComment() {
-      if (confirm('Are you sure you want to delete this comment?')) {
-        axios
-          .delete(`http://localhost:8082/api/v1/comments/${this.comment.id}`, {
-            headers: {
-              Authorization: `${localStorage.getItem('accessToken')}`,
-            },
-          })
-          .then(() => {
-            this.$emit('commentDeleted', this.comment.id);
-            alert('Comment deleted successfully!');
-          })
-          .catch((error) => {
-            console.error('Error deleting comment:', error);
-            alert('Failed to delete the comment.');
-          });
-      }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this comment?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`http://localhost:8082/api/v1/comments/${this.comment.id}`, {
+              headers: {
+                Authorization: `${localStorage.getItem('accessToken')}`,
+              },
+            })
+            .then(() => {
+              this.$emit('commentDeleted', this.comment.id);
+
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'The comment has been deleted successfully.',
+                icon: 'success',
+                timer: 2000,
+                showConfirmButton: false,
+              });
+            })
+            .catch((error) => {
+              console.error('Error deleting comment:', error);
+
+              Swal.fire({
+                title: 'Error!',
+                text: 'Failed to delete the comment.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+              });
+            });
+        }
+      });
     },
   },
 };
