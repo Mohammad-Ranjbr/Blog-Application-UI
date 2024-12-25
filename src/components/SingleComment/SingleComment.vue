@@ -8,8 +8,14 @@
         <button @click="saveEdit" class="comment__save-edit">Save</button>
         <button @click="cancelEdit" class="comment__cancel-edit">Cancel</button>
       </div>
+      <div v-else class="comment_message">
+        <div>{{ comment.content }}</div>
+        <div style="display: flex;">
+          <div class="comment__like-count">{{ comment.likes }} Likes</div>
+          <div class="comment__like-count">{{ comment.likes }} Likes</div>
+        </div>
+      </div>
       
-      <div v-else class="comment_message">{{ comment.content }}</div>
     </div>
 
     <div class="comment__options">
@@ -244,10 +250,20 @@ export default {
   }
 
 .comment_message {
+  display: flex;
+  flex-direction: column;
   font-size: 15px;
   font-weight: 200;
   margin-left: 0.6rem;
   margin-bottom: 10px;
+}
+
+.comment__like-count {
+  font-size: 12px;         /* اندازه فونت کوچکتر */
+  color: #888;             /* رنگ خاکستری */
+  margin-top: 5px;         /* فاصله از بالا */
+  display: block;          /* نمایش به صورت بلوک (در خط جدید) */
+  margin-left: 0.0rem;     /* فاصله از سمت چپ */
 }
 
 .icon {

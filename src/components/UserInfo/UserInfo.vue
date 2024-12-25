@@ -2,7 +2,6 @@
   <div class="user-info">
     <img
       :src="userProfile.image ? `data:image/jpeg;base64,${userProfile.image}` : 'default-image.jpg'"
-      alt="Hemdan's profile image"
       class="user-info__img"
       draggable="false"
     />

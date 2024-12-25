@@ -38,12 +38,24 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'PostAction',
+  props: {
+    post: {
+      type: Object,
+      required: true,
+    },
+    userId: {
+      type: String,
+      required: true,
+    },
+  },
   data: function() {
     return {
-      liked: false,
-      saved: false,
+      liked: this.post.likedByCurrentUser || false,
+      saved: this.post.savedByCurrentUser || false, 
     };
   },
   computed: {
@@ -60,7 +72,26 @@ export default {
   },
   methods: {
     changeLikeState: function() {
-      this.liked = !this.liked;
+      const likeData = {
+        userId: this.userId,
+        postId: this.post.id,
+        like: true,
+      };
+
+      axios
+      .post('http://localhost:8082/api/v1/posts/like', likeData, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        this.liked = !this.liked;
+        const updatedLikes = response.data.likes;
+        this.$emit('updateLikes', updatedLikes); 
+      })
+      .catch((error) => {
+        console.error('Error liking the post:', error);
+      });
     },
     changeSaveState: function() {
       this.saved = !this.saved;

@@ -42,7 +42,7 @@
       />
     </div>
 
-    <post-action></post-action>
+    <post-action :post="post" :userId="userId" @updateLikes="updatePostLikes"></post-action>
     <div class="post__action-box">
       <div class="post__likes">{{ post.likes }} likes</div>
       <div class="post__category">{{ post.category.title }}</div>
@@ -69,6 +69,10 @@ export default {
       type: Array,
       required: true,
     },
+    userId: {
+      type: String,
+      required: true,
+    },
   },
   created() {
     this.userId = localStorage.getItem('userId');
@@ -81,6 +85,11 @@ export default {
     'post-description': () => import('./../PostDescription/PostDescription'),
     'post-comments': () => import('./../Comments/Comments'),
   },
+  methods: {
+    updatePostLikes(newLikes) {
+      this.post.likes = newLikes; 
+    },
+  }
 };
 </script>
 
