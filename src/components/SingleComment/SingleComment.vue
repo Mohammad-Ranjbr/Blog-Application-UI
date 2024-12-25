@@ -8,17 +8,12 @@
         <button @click="saveEdit" class="comment__save-edit">Save</button>
         <button @click="cancelEdit" class="comment__cancel-edit">Cancel</button>
       </div>
+
       <div v-else class="comment_message">
         <div>{{ comment.content }}</div>
-        <div style="display: flex;">
-          <div class="comment__like-count">{{ comment.likes }} Likes</div>
-          <div class="comment__like-count">{{ comment.likes }} Likes</div>
-        </div>
       </div>
       
-    </div>
-
-    <div class="comment__options">
+      <div class="comment__options">
           <div v-if="isCommentOwner && showOptions" class="comment__options">
             <button class="comment__edit" @click="editComment">
               <img src="./../../assets/svgs/icons8-edit.svg" class="icon" draggable="false" />
@@ -27,16 +22,24 @@
               <img src="./../../assets/svgs/icons8-delete.svg" class="icon" draggable="false" />
             </button>
           </div>
-      <button  class="comment__like" >
-        <img :src="likedImg" class="icon" @click="changeLikeState" draggable="false" />
-      </button>
+        <button  class="comment__like" >
+          <img :src="likedImg" class="icon" @click="changeLikeState" draggable="false" />
+        </button>
+        </div>
     </div>
+
+    <div class="comment__meta">
+      <div class="comment__like-count">{{ formattedTime }}</div>
+      <div class="comment__like-count">{{ comment.likes }} Likes</div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 export default {
   name: 'SingleComment',
@@ -63,6 +66,9 @@ export default {
     isCommentOwner: function () {
       const userId = localStorage.getItem('userId');
       return userId && userId === this.comment.user.id.toString();
+    },
+    formattedTime() {
+      return moment(this.comment.creationDate).fromNow();
     },
   },
   methods: {
@@ -144,12 +150,33 @@ export default {
   display: flex;
   justify-content: space-between;
   padding-right: 20px;
+  flex-direction: column;
 
   &__options {
     display: flex;
     justify-content: start;
     align-items: start;
   }
+
+  .comment__meta {
+    margin-top: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 1px 8px;
+    border-radius: 4px;
+    width: fit-content;
+    font-size: 8px;
+    color: #888;
+  }
+
+.comment__like-count {
+  font-size: 12px;
+  color: #888;
+  margin-right: 10px;
+}
+
   &__like,
   &__edit,
   &__delete {
@@ -238,10 +265,10 @@ export default {
   }
 
 }
-.comment_content{
+  .comment_content{
     display: flex;
     flex-direction: row;
-    align-Items:start
+    width: 100%;
   }
   .comment_creator {
     font-weight: 600;
@@ -256,14 +283,6 @@ export default {
   font-weight: 200;
   margin-left: 0.6rem;
   margin-bottom: 10px;
-}
-
-.comment__like-count {
-  font-size: 12px;         /* اندازه فونت کوچکتر */
-  color: #888;             /* رنگ خاکستری */
-  margin-top: 5px;         /* فاصله از بالا */
-  display: block;          /* نمایش به صورت بلوک (در خط جدید) */
-  margin-left: 0.0rem;     /* فاصله از سمت چپ */
 }
 
 .icon {
