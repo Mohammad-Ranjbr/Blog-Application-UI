@@ -94,8 +94,37 @@ export default {
       });
     },
     changeSaveState: function() {
-      this.saved = !this.saved;
+      if (this.saved) {
+        axios
+          .delete(`http://localhost:8082/api/v1/users/${this.userId}/unsave_post/${this.post.id}`, {
+            headers: {
+              Authorization: `${localStorage.getItem('accessToken')}`,
+            },
+          })
+          .then(() => {
+            this.saved = false; 
+            this.$emit('updateSavedState', this.saved); 
+          })
+          .catch((error) => {
+            console.error('Error unsaving the post:', error);
+          });
+      } else {
+        axios
+          .post(`http://localhost:8082/api/v1/users/${this.userId}/save_post/${this.post.id}`, {}, {
+            headers: {
+              Authorization: `${localStorage.getItem('accessToken')}`,
+            },
+          })
+          .then(() => {
+            this.saved = true; 
+            this.$emit('updateSavedState', this.saved); 
+          })
+          .catch((error) => {
+            console.error('Error saving the post:', error);
+          });
+      }
     },
+
   },
 };
 </script>
