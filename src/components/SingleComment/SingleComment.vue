@@ -73,7 +73,29 @@ export default {
   },
   methods: {
     changeLikeState: function() {
-      this.liked = !this.liked;
+      const likeData = {
+        userId: this.localStorage.getItem('userId'),
+        commentId: this.comment.id,
+        like: true,
+      };
+
+      axios
+      .post('http://localhost:8082/api/v1/comments/like-dislike', likeData, {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+      })
+      .then((response) => {
+        this.liked = !this.liked;
+        const updatedLikes = response.data.likes;
+        this.$emit('updateLikes', updatedLikes); 
+      })
+      .catch((error) => {
+        console.error('Error liking the post:', error);
+      });
+    },
+    changeSaveState: function() {
+      this.saved = !this.saved;
     },
     editComment() {
       this.isEditing = true;
