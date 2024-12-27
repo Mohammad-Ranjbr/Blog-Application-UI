@@ -1,110 +1,94 @@
 <template>
-  <div class="login">
-    <div class="container auth-container">
-      <div class="row">
-        <left-auth></left-auth>
+  <div class="login-page">
+    <div class="login-container">
+      <!-- Left Column -->
+      <left-auth></left-auth>
 
-        <div class="right-col text-center">
-          <div class="header">
-            <a href="/" class="header__link">
-              <h2 class="header__title">Blogino</h2>
-            </a>
+      <!-- Right Column -->
+      <div class="login-box">
+        <div class="header">
+          <a href="/" class="header__link">
+            <h1 class="header__title">Blogino</h1>
+          </a>
+          <p class="header__subtitle">
+            Sign up to <span>Blogino</span> and connect with your friends.
+          </p>
+        </div>
 
-            <p class="header__info">
-              Sign up to <span>Blogino</span> and connect with your friends.
-            </p>
+        <div v-if="errMessage" class="alert err-msg">
+          {{ errMessage }}
+        </div>
+
+        <form class="login-form" @submit.prevent="signup">
+          <div class="form-group">
+            <input
+              type="text"
+              id="name"
+              v-model="name"
+              class="form-control"
+              placeholder="Enter your full name"
+            />
           </div>
 
-          <div class="alert alert-danger err-msg" role="alert" v-show="this.errMessage">
-            {{ this.errMessage }}
+          <div class="form-group">
+            <input
+              type="text"
+              id="username"
+              v-model="userName"
+              class="form-control"
+              placeholder="Enter your username"
+            />
           </div>
 
-          <form>
-            <div class="form-label-group">
-              <input
-                type="text"
-                name="name"
-                id="name"
-                class="form-control"
-                placeholder="Full Name ..."
-                v-model="name"
-              />
-            </div>
+          <div class="form-group">
+            <input
+              type="email"
+              id="email"
+              v-model="email"
+              class="form-control"
+              placeholder="Enter your email"
+            />
+          </div>
 
-            <div class="form-label-group">
-              <input
-                type="text"
-                name="userName"
-                id="userName"
-                class="form-control"
-                placeholder="Username ..."
-                v-model="userName"
-              />
-            </div>
+          <div class="form-group">
+            <input
+              type="text"
+              id="phoneNumber"
+              v-model="phoneNumber"
+              class="form-control"
+              placeholder="Enter your phone number"
+            />
+          </div>
 
-            <div class="form-label-group">
-              <input
-                type="email"
-                name="email"
-                id="email"
-                class="form-control"
-                placeholder="Email ..."
-                v-model="email"
-              />
-            </div>
+          <div class="form-group">
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              class="form-control"
+              placeholder="Enter your password"
+            />
+          </div>
 
-            <div class="form-label-group">
-              <input
-                type="text"
-                name="phoneNumber"
-                id="phoneNumber"
-                class="form-control"
-                placeholder="Phone Number ..."
-                v-model="phoneNumber"
-              />
-            </div>
+          <div class="form-group">
+            <textarea
+              id="about"
+              v-model="about"
+              class="form-control"
+              placeholder="Tell us about yourself"
+            ></textarea>
+          </div>
 
-            <div class="form-label-group">
-              <input
-                type="password"
-                name="password"
-                id="password"
-                class="form-control"
-                placeholder="Password ..."
-                v-model="password"
-              />
-            </div>
+          <button type="submit" class="btn-primary">
+            Sign up
+          </button>
+        </form>
 
-            <div class="form-label-group">
-              <textarea
-                name="about"
-                id="about"
-                class="form-control"
-                placeholder="About You ..."
-                v-model="about"
-              ></textarea>
-            </div>
-
-            <div class="options">
-              <div class="options__first">
-                <button type="button" class="btn btn-primary btn-block auth-btn" @click="signup">
-                  Signup
-                </button>
-              </div>
-
-              <div class="options__second">
-                <p class="conditions">
-                  By signing up, you agree to <span>our Terms</span>, <span>Data Policy</span> and
-                  <span>Cookies Policy</span>
-                </p>
-
-                <div class="have-account">
-                  <span>Already have an account?</span>
-                  <a href="./login" class="have-account__link">Login</a>
-                </div>
-              </div>
-            </div>
-          </form>
+        <div class="footer">
+          <p>
+            Already have an account? 
+            <a href="./login" class="signup-link">Login</a>
+          </p>
         </div>
       </div>
     </div>
@@ -169,98 +153,120 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  padding: 0;
-  margin: 0;
-}
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 
-.auth-container {
-  margin-top: 0px;
+  .login-container {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
 
-  .right-col {
-    background-color: $white;
-    border: 1px solid $lighter-gray;
-    width: 400px;
-    float: right;
-    margin: -20px 10px 0px 10px;
-    padding: 80px 40px 40px 40px;
+    margin-top: -200px;
 
-    @media (max-width: 992px) {
-      margin: 20px auto;
+    @media (max-width: 768px) {
+      flex-direction: column;
     }
   }
-}
 
-.header {
-  &__title {
-    font-family: 'Pacifico', cursive;
-    font-weight: 300;
-  }
+  .login-box {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  &__link:hover {
-    text-decoration: none;
-    color: $main-color;
-  }
-
-  &__info {
-    font-size: 17px;
-    line-height: 25px;
-    color: $dark-gray;
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-  }
-}
-
-.social {
-  &__btn {
-    padding: 5px;
-  }
-
-  &__logo {
-    margin-right: 10px;
-  }
-}
-
-.options {
-  .options__first {
-    .auth-btn {
-      margin-top: 30px;
+    .header {
+      text-align: center;
       margin-bottom: 30px;
-      padding: 6px;
-    }
-  }
 
-  .options__second {
-    .have-account {
-      margin-top: 15px;
+      &__title {
+        font-family: "Pacifico", cursive;
+        font-size: 2.5rem;
+        color: #1976d2;
+      }
 
-      &__link {
-        padding: 5px;
+      &__subtitle {
+        font-size: 1rem;
+        color: #757575;
+        margin-top: 20px;
+
+        span {
+          color: #1976d2;
+          font-weight: bold;
+        }
       }
     }
 
-    .conditions {
-      color: $dark-gray;
+    .err-msg {
+      background-color: #ffebee;
+      color: #d32f2f;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
 
-      span {
-        font-weight: 600;
+    .login-form {
+      width: 100%;
+
+      .form-group {
+        margin-bottom: 20px;
+
+        .form-control {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 1rem;
+          background-color: #fafafa;
+          transition: border-color 0.3s ease;
+
+          &:focus {
+            border-color: #1976d2;
+          }
+        }
+      }
+
+      .btn-primary {
+        width: 100%;
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0d47a1;
+        }
+      }
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+
+      .signup-link {
+        color: #1976d2;
+        font-weight: bold;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
-}
-
-.form-control {
-  background: $white-smoke;
-  padding: 8px 10px 8px 10px;
-  color: $darker-gray;
-  font-size: $font-size-2x;
-  line-height: 18px;
-  min-height: 40px;
-  margin-bottom: 1rem;
-}
-
-.err-msg {
-  margin-bottom: 1rem;
-  padding: 5px 10px;
 }
 </style>
+
