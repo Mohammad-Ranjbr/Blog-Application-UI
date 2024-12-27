@@ -22,7 +22,7 @@ export default {
     return {
       userProfile: {
         image: '',
-        username: 'hellomayuko',
+        username: '',
         name: ''
       },
     };

@@ -83,8 +83,7 @@ export default {
       })
       .then((response) => {
         this.liked = !this.liked;
-        const updatedLikes = response.data.likes;
-        this.$emit('updateLikes', updatedLikes); 
+        this.comment.likes = response.data.likes;
       })
       .catch((error) => {
         console.error('Error liking the comment:', error);
