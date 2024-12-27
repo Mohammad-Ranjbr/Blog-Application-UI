@@ -55,6 +55,11 @@ const routes = [
     component: () => import('./../views/Saved.vue'),
   },
   {
+    path: '/setting',
+    name: 'Setting',
+    component: () => import('./../views/Setting.vue'),
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: () => import('./../views/NotFound.vue'),

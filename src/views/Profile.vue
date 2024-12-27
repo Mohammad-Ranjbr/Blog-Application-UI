@@ -26,7 +26,7 @@
           tabindex="-1"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
-        ><
+        >
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal__header">
@@ -208,12 +208,10 @@ export default {
   mounted() {
     this.fetchUserData();
   },
-  watch: {
-    '$route.params.id': function () {
-      this.fetchUserData();
-    },
+  '$route.params.id': function (newId) {
+    console.log('Route param changed:', newId);
+    this.fetchUserData();
   },
-
 };
 </script>
 

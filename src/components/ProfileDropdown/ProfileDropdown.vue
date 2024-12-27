@@ -26,7 +26,7 @@
         Saved
       </a>
 
-      <a class="dropdown-item" href="/profile/settings">
+      <a class="dropdown-item" href="/setting">
         <img
           src="./../../assets/svgs/settings.svg"
           alt="settings icon"
@@ -63,7 +63,6 @@ export default {
     };
   },
   created() {
-    // خواندن User ID از Local Storage
     this.userId = localStorage.getItem('userId');
   },
   methods: {
