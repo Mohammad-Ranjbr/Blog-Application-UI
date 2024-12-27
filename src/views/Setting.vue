@@ -100,7 +100,7 @@ export default {
                         icon: 'success',
                         confirmButtonText: 'Ok',
                     }).then(() => {
-                        this.$router.push(`/profile/${userId}`); 
+                        this.$router.push(`/profile/${userId}`);
                     });
                 })
                 .catch((error) => {
@@ -109,22 +109,39 @@ export default {
         },
         deleteAccount() {
             const userId = localStorage.getItem('userId');
-            axios
-                .delete(`http://localhost:8082/api/v1/users/${userId}`, {
-                    headers: {
-                        Authorization: `${localStorage.getItem('accessToken')}`,
-                    },
-                })
-                .then((response) => {
-                    alert('Account deleted successfully');
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('userId');
-                    this.$router.push('/login');
-                })
-                .catch((error) => {
-                    console.error('Error deleting account:', error);
-                });
-        },
+            Swal.fire({
+                title: 'Are you sure you want to delete your account?',
+                text: 'This action is irreversible.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios
+                        .delete(`http://localhost:8082/api/v1/users/${userId}`, {
+                            headers: {
+                                Authorization: `${localStorage.getItem('accessToken')}`,
+                            },
+                        })
+                        .then((response) => {
+                            Swal.fire({
+                                title: 'Account Deleted',
+                                text: 'Your account has been successfully deleted.',
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                            }).then(() => {
+                                localStorage.removeItem('accessToken');
+                                localStorage.removeItem('userId');
+                                this.$router.push('/login');
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Error deleting account:', error);
+                        });
+                }
+            });
+        }
     },
 };
 </script>
