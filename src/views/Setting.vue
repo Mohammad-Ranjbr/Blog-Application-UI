@@ -3,7 +3,9 @@
 
         <h2>Update Profile</h2>
         <img :src="userProfile.image ? `data:image/jpeg;base64,${userProfile.image}` : 'default-image.jpg'"
-            alt="profile image" class="profile-img" />
+            alt="profile image" class="profile-img" @click="openFileSelector" />
+
+        <input type="file" ref="fileInput" style="display: none" @change="handleFileChange" accept="image/*" />
 
         <form @submit.prevent="updateProfile">
             <div class="form-group">
@@ -41,6 +43,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import EventBus from '@/router/event-bus.js';
 
 export default {
     name: 'UpdateProfile',
@@ -54,6 +57,7 @@ export default {
                 userName: '',
                 phoneNumber: '',
             },
+            selectedFile: null,
         };
     },
     mounted() {
@@ -84,6 +88,53 @@ export default {
                 .catch((error) => {
                     console.error('Error fetching user profile:', error);
                 });
+        },
+        openFileSelector() {
+            this.$refs.fileInput.click();
+        },
+
+        handleFileChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.selectedFile = file;
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    this.userProfile.image = reader.result.split(',')[1];
+                    this.uploadProfileImage();
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        uploadProfileImage() {
+            const userId = localStorage.getItem('userId');
+            if (this.selectedFile) {
+                axios
+                    .patch(
+                        `http://localhost:8082/api/v1/users/${userId}/profile-image`,
+                        {
+                            format: 'jpg',
+                            base64Content: this.userProfile.image,
+                        },
+                        {
+                            headers: {
+                                Authorization: `${localStorage.getItem('accessToken')}`,
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        Swal.fire({
+                            title: 'Profile Image Updated!',
+                            text: 'Your profile image has been successfully updated.',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                        }).then(() => {
+                            EventBus.$emit('profile-updated');
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Error uploading profile image:', error);
+                    });
+            }
         },
         updateProfile() {
             const userId = localStorage.getItem('userId');
@@ -154,6 +205,7 @@ export default {
     background-color: $white;
     border: 2px solid $light-gray;
     padding: 4px;
+    cursor: pointer;
 }
 
 .update-profile {
