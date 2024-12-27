@@ -66,6 +66,7 @@ export default {
         .then((response) => {
           const newComment = response.data;
           this.comments.unshift(newComment);
+          this.comments.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
           this.commentMessage = '';
         })
         .catch((error) => {
@@ -83,7 +84,7 @@ export default {
         },
       })
       .then((response) => {
-        this.comments = response.data;
+        this.comments = response.data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
       })
       .catch((error) => {
         console.error('Error fetching comments:', error);
