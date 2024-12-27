@@ -244,12 +244,13 @@ export default {
       .profile-img-wrapper {
         position: relative;
         img {
-          width: 120px;
-          height: 120px;
+          width: 150px;
+          height: 150px;
           border-radius: 50%;
           object-fit: cover;
           border: 3px solid #007bff;
           margin-bottom: 10px;
+          cursor: pointer;
         }
 
         .btn-upload {
