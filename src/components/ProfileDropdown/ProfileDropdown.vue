@@ -21,7 +21,7 @@
         Profile
       </router-link>
 
-      <a class="dropdown-item" href="/profile/saved">
+      <a class="dropdown-item" href="/saved">
         <img src="./../../assets/svgs/unsaved.svg" alt="saved icon" class="profile-options__icon" />
         Saved
       </a>

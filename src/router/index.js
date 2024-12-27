@@ -50,6 +50,11 @@ const routes = [
     component: () => import('./../views/Explore.vue'),
   },
   {
+    path: '/saved',
+    name: 'Saved',
+    component: () => import('./../views/Saved.vue'),
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: () => import('./../views/NotFound.vue'),
