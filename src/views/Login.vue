@@ -1,72 +1,56 @@
 <template>
-  <div class="container auth-container">
-    <div class="row">
+  <div class="login-page">
+    <div class="login-container">
+      <!-- Left Column -->
       <left-auth></left-auth>
 
-      <div class="right-col text-center">
+      <!-- Right Column -->
+      <div class="login-box">
         <div class="header">
           <a href="/" class="header__link">
-            <h2 class="header__title">Blogino</h2>
+            <h1 class="header__title">Blogino</h1>
           </a>
-
-          <p class="header__info">
+          <p class="header__subtitle">
             Log in to <span>Blogino</span> to see photos and videos from your friends.
           </p>
         </div>
 
-        <div class="alert alert-danger err-msg" role="alert" v-show="this.errMessage">
-          {{ this.errMessage }}
+        <div v-if="errMessage" class="alert err-msg">
+          {{ errMessage }}
         </div>
 
-        <form>
-          <div class="form-label-group">
+        <form class="login-form" @submit.prevent="login">
+          <div class="form-group">
             <input
               type="email"
-              name="email"
               id="email"
-              class="form-control"
-              
-              placeholder="Enter Email ..."
               v-model="username"
+              class="form-control"
+              placeholder="Enter your email"
             />
           </div>
 
-          <div class="form-label-group">
+          <div class="form-group">
             <input
               type="password"
-              name="password"
               id="password"
-              class="form-control"
-              placeholder="Enter Password ..."
               v-model="password"
+              class="form-control"
+              placeholder="Enter your password"
             />
           </div>
 
-          <div class="options">
-            <div class="options__first">
-              <button
-                type="submit"
-                class="btn btn-primary btn-block auth-btn"
-                @click.prevent="login"
-              >
-                Login
-              </button>
-            </div>
-
-            <div class="options__second">
-              <!-- <div class="forgot">
-                <a href="./forget" class="forgot__link">
-                  Forgot password?
-                </a>
-              </div> -->
-
-              <div class="have-account">
-                <span>Don't have an account?</span>
-                <a href="./signup" class="have-account__link">Signup</a>
-              </div>
-            </div>
-          </div>
+          <button type="submit" class="btn-primary">
+            Login
+          </button>
         </form>
+
+        <div class="footer">
+          <p>
+            Don’t have an account? 
+            <a href="./signup" class="signup-link">Signup</a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -109,7 +93,7 @@ export default {
         if (err.response && err.response.data && err.response.data.message) {
           this.errMessage = err.response.data.message;
         } else {
-          this.errMessage = 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.';
+          this.errMessage = error.response?.data?.message || "An error occurred. Please try again.";
         }
       }
     }
@@ -119,87 +103,119 @@ export default {
 
 
 <style lang="scss" scoped>
-* {
-  padding: 0;
-  margin: 0;
-}
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 
-.auth-container {
-  margin-top: 20px;
+  .login-container {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
 
-  .right-col {
-    background-color: $white;
-    border: 1px solid $lighter-gray;
-    width: 400px;
-    float: right;
-    margin: 20px 10px 0px 10px;
-    padding: 120px 40px 40px 40px;
+    margin-top: -200px;
 
-    @media (max-width: 992px) {
-      margin: 20px auto;
+    @media (max-width: 768px) {
+      flex-direction: column;
     }
   }
-}
 
-.header {
-  &__title {
-    font-family: 'Pacifico', cursive;
-    font-weight: 300;
-  }
+  .login-box {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  &__link:hover {
-    text-decoration: none;
-    color: $main-color;
-  }
-
-  &__info {
-    font-size: 17px;
-    line-height: 25px;
-    color: $dark-gray;
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-  }
-}
-
-.social {
-  &__btn {
-    padding: 5px;
-  }
-  &__logo {
-    margin-right: 10px;
-  }
-}
-
-.have-account {
-  margin-top: 15px;
-
-  &__link {
-    padding: 5px;
-  }
-}
-
-.options {
-  &__first {
-    .auth-btn {
-      margin-top: 30px;
+    .header {
+      text-align: center;
       margin-bottom: 30px;
-      padding: 6px;
+
+      &__title {
+        font-family: "Pacifico", cursive;
+        font-size: 2.5rem;
+        color: #1976d2;
+      }
+
+      &__subtitle {
+        font-size: 1rem;
+        color: #757575;
+        margin-top: 20px;
+
+        span {
+          color: #1976d2;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .err-msg {
+      background-color: #ffebee;
+      color: #d32f2f;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .login-form {
+      width: 100%;
+
+      .form-group {
+        margin-bottom: 20px;
+
+        .form-control {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          font-size: 1rem;
+          background-color: #fafafa;
+          transition: border-color 0.3s ease;
+
+          &:focus {
+            border-color: #1976d2;
+          }
+        }
+      }
+
+      .btn-primary {
+        width: 100%;
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0d47a1;
+        }
+      }
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+
+      .signup-link {
+        color: #1976d2;
+        font-weight: bold;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
-}
-
-.form-control {
-  background: $white-smoke;
-  padding: 8px 10px 8px 10px;
-  color: $darker-gray;
-  font-size: $font-size-2x;
-  line-height: 18px;
-  min-height: 40px;
-  margin-bottom: 1rem;
-}
-
-.err-msg {
-  margin-bottom: 1rem;
-  padding: 5px 10px;
 }
 </style>
