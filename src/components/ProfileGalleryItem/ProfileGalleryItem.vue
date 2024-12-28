@@ -40,5 +40,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.gallery-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 @import './../ProfileGallery/ProfileGallery.scss';
 </style>
