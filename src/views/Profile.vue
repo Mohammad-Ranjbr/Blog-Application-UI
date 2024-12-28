@@ -163,6 +163,7 @@ export default {
       })
       .then((response) => {
         this.posts = response.data.content;
+        this.posts.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
       })
       .catch((error) => {
         console.error('Error fetching user posts:', error);
