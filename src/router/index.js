@@ -55,6 +55,11 @@ const routes = [
     component: () => import('./../views/Saved.vue'),
   },
   {
+    path: '/create-post',
+    name: 'CreatePost',
+    component: () => import('./../views/CreatePost.vue'),
+  },
+  {
     path: '/setting',
     name: 'Setting',
     component: () => import('./../views/Setting.vue'),

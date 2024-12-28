@@ -33,7 +33,8 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-body">
-                <button class="post-modal-choice danger-choice">Create Post</button>
+                <button class="post-modal-choice danger-choice" 
+                onclick="window.location.href='/create-post'">Create Post</button>
                 <button class="post-modal-choice lst-choice" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">Cancel</span>
                 </button>
