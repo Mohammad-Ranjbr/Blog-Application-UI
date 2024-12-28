@@ -40,6 +40,11 @@ const routes = [
     component: () => import('./../views/Profile.vue'),
   },
   {
+    path: '/post/:id',
+    name: 'ShowPost',
+    component: () => import('./../views/ShowPost.vue'),
+  },
+  {
     path: '/inbox',
     name: 'Chat',
     component: () => import('./../views/Chat.vue'),

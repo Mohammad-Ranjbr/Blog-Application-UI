@@ -77,7 +77,7 @@ export default {
                 const reader = new FileReader();
                 reader.onload = () => {
                     this.imageData = {
-                        format: file.type,
+                        format: 'jpg',
                         base64Content: reader.result.split(',')[1],
                     };
                 };
