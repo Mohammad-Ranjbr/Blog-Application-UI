@@ -213,103 +213,66 @@ export default {
   padding: 20px;
   font-family: "Roboto", sans-serif;
   color: #333;
+  animation: fadeIn 0.6s ease-out;
+}
 
-  .settings-header {
-    text-align: center;
-    margin-bottom: 30px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
-    h2 {
-      font-size: 2rem;
-      color: #007bff;
-    }
+.settings-header {
+  text-align: center;
+  margin-bottom: 30px;
 
-    p {
-      font-size: 1rem;
-      color: #555;
-    }
+  h2 {
+    font-size: 2rem;
+    color: #007bff;
   }
 
-  .settings-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+  p {
+    font-size: 1rem;
+    color: #555;
+  }
+}
 
-    .profile-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+.settings-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
 
-      .profile-img-wrapper {
-        position: relative;
-        img {
-          width: 150px;
-          height: 150px;
-          border-radius: 50%;
-          object-fit: cover;
-          border: 3px solid #007bff;
-          margin-bottom: 10px;
-          cursor: pointer;
-        }
+  .profile-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-        .btn-upload {
-          background-color: #007bff;
-          color: #fff;
-          border: none;
-          border-radius: 20px;
-          padding: 5px 15px;
-          font-size: 0.9rem;
-          cursor: pointer;
-          transition: background-color 0.3s;
-
-          &:hover {
-            background-color: #0056b3;
-          }
-        }
-      }
-    }
-
-    .settings-form {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      margin-top: 20px;
-
-      .form-group {
-        label {
-          font-weight: 600;
-          margin-bottom: 5px;
-          display: inline-block;
-        }
-
-        input,
-        textarea {
-          width: 100%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          font-size: 1rem;
-          transition: border-color 0.3s;
-
-          &:focus {
-            border-color: #007bff;
-          }
-        }
-
-        textarea {
-          min-height: 100px;
-          resize: none;
-        }
+    .profile-img-wrapper {
+      position: relative;
+      img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #007bff;
+        margin-bottom: 10px;
+        cursor: pointer;
       }
 
-      .btn-primary {
+      .btn-upload {
         background-color: #007bff;
         color: #fff;
         border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 1rem;
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 0.9rem;
         cursor: pointer;
         transition: background-color 0.3s;
 
@@ -318,24 +281,76 @@ export default {
         }
       }
     }
+  }
 
-    .delete-account-btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      background-color: #dc3545;
+  .settings-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 20px;
+
+    .form-group {
+      label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #1976d2;
+        box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
+        outline: none;
+      }
+
+      textarea {
+        min-height: 100px;
+        resize: none;
+      }
+    }
+
+    .btn-primary {
+      background-color: #007bff;
       color: #fff;
       border: none;
       border-radius: 5px;
-      padding: 10px;
+      padding: 10px 20px;
       font-size: 1rem;
       cursor: pointer;
-      margin-top: 20px;
       transition: background-color 0.3s;
 
       &:hover {
-        background-color: #a71d2a;
+        background-color: #0056b3;
       }
+    }
+  }
+
+  .delete-account-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #a71d2a;
     }
   }
 }
