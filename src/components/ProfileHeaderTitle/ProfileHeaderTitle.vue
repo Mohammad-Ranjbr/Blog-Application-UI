@@ -18,9 +18,29 @@
           />
         </button>
 
-        <button class="header__options-menu" data-toggle="modal" data-target="#exampleModalCenter">
+        <button class="header__options-menu" data-toggle="modal" data-target="#exampleModalCenter" style="outline: none;">
           <span class="dots">●●●</span>
         </button>
+
+        <div
+          class="modal fade modal-create-post"
+          id="exampleModalCenter"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button class="post-modal-choice danger-choice">Create Post</button>
+                <button class="post-modal-choice lst-choice" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">Cancel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -339,5 +359,60 @@ export default {
   flex: 1 1 auto;
   padding: 1rem;
   overflow-y: auto;
+}
+
+.modal-content2 {
+  border-radius: 12px;
+  width: 400px;
+  height: 400px;
+  margin: auto;
+}
+
+.modal-create-post .modal-content {
+  border-radius: 12px;
+  width: 400px; 
+  height: 100px; 
+  margin: auto;
+}
+
+.modal-create-post .modal-body {
+  padding: 1rem;
+}
+
+.post-modal-choice {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid $lighter-gray;
+  padding-top: 0.3rem; 
+  padding-bottom: 0.3rem; 
+  background-color: transparent;
+  font-size: 0.875rem;
+
+  &:hover {
+    outline: none;
+  }
+
+  &:active {
+    outline: none;
+  }
+}
+
+.danger-choice {
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  outline: none;
+}
+
+.lst-choice {
+  color: red;
+  border-bottom: none;
+  font-size: 0.875rem;
+  padding: 0.3rem 0;
+  outline: none;
+}
+
+.dots {
+  font-size: 10px;
+  margin-top: 5px;
 }
 </style>

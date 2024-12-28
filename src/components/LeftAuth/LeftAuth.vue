@@ -48,7 +48,7 @@ export default {
       padding-top: 20px;
       width: 100%;
       height: auto;
-      float: right;
+      float:right;
       margin: 50px 10px 10px;
       transition: 1s ease-in-out;
     }

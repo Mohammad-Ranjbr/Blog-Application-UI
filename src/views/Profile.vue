@@ -15,7 +15,7 @@
 
       <div class="suggestions__header">
         <div class="suggestions__title">Suggested</div>
-        <div class="suggestions__seeall" data-toggle="modal" data-target="#seeall">
+        <div class="suggestions__seeall" data-toggle="modal" data-target="#seeall" style="cursor: pointer;">
           See All
         </div>
       </div>

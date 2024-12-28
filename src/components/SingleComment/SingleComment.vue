@@ -282,11 +282,11 @@ export default {
 }
 
 .comment__like-count {
-  font-size: 12px;         /* اندازه فونت کوچکتر */
-  color: #888;             /* رنگ خاکستری */
-  margin-top: 5px;         /* فاصله از بالا */
-  display: block;          /* نمایش به صورت بلوک (در خط جدید) */
-  margin-left: 0.0rem;     /* فاصله از سمت چپ */
+  font-size: 12px;      
+  color: #888;    
+  margin-top: 5px;        
+  display: block;        
+  margin-left: 0.0rem;   
 }
 
 .icon {
