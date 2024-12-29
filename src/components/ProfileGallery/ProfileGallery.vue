@@ -1,7 +1,7 @@
 <template>
   <div class="gallery-container">
     <div class="gallery" v-if="items && items.length > 0">
-      <gallery-item v-for="(item, index) in items" :key="index" :item="item" />
+      <gallery-item v-for="(item, index) in items" :key="index" :item="item" @postDeleted="handlePostDeleted"/>
     </div>
     <div v-else class="no-posts-message">
       <div class="no-posts-content">
@@ -18,7 +18,9 @@
 export default {
   name: 'ProfileGallery',
   data: function() {
-    return {};
+    return {
+      items: [],
+    };
   },
   props: {
     items: {
@@ -30,7 +32,9 @@ export default {
     'gallery-item': () => import('./../ProfileGalleryItem/ProfileGalleryItem'),
   },
   methods: {
-    
+    handlePostDeleted(postId) {
+      this.items = this.items.filter(item => item.id !== postId);
+    },
   },
 };
 </script>
