@@ -45,6 +45,11 @@ const routes = [
     component: () => import('./../views/ShowPost.vue'),
   },
   {
+    path: '/edit-post/:id',
+    name: 'EditPost',
+    component: () => import('./../views/EditPost.vue'),
+  },
+  {
     path: '/inbox',
     name: 'Chat',
     component: () => import('./../views/Chat.vue'),

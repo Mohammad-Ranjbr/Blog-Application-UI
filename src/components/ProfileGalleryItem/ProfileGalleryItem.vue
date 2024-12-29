@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     editItem() {
-      console.log('Edit item:', this.item.id);
+      this.$router.push({ name: 'EditPost', params: { id: this.item.id } });
     },
     async deleteItem() {
       const accessToken = localStorage.getItem('accessToken');
@@ -145,6 +145,7 @@ button {
   border: none;
   padding: 0;
   cursor: pointer;
+  outline: none;
 }
 
 @import './../ProfileGallery/ProfileGallery.scss';
