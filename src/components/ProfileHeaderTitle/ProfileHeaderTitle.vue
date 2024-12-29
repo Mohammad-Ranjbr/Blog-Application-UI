@@ -160,7 +160,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log('Response Data:', response.data); 
           if (response.data) {
             const userProfile = response.data;
             this.userProfile = {

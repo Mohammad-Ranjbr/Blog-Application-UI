@@ -16,13 +16,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <button v-if="isOwner" class="post-modal-choice danger-choice" @click="deletePost">
-                Delete 
-              </button>
-              <button v-if="isOwner" class="post-modal-choice" @click="updatePost">
-                Edit
-              </button>
-              <button v-else class="post-modal-choice danger-choice">
+              <button  class="post-modal-choice danger-choice">
                 Unfollow
               </button>
               <button class="post-modal-choice lst-choice" data-dismiss="modal" aria-label="Close">
