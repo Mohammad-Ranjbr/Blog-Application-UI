@@ -153,7 +153,7 @@ export default {
                         Authorization: `${localStorage.getItem('accessToken')}`,
                     },
                 })
-                .then((response) => {
+                .then(() => {
                     Swal.fire({
                         title: 'Profile Updated!',
                         text: 'Your profile has been successfully updated.',

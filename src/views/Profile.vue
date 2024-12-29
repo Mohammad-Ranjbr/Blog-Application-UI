@@ -138,13 +138,11 @@ export default {
     },
     decode() {
       let token = localStorage.getItem('accessToken');
-      console.log(token)
       try {
         if (token) {
           let decoded = VueJwtDecode.decode(token);
           this.current_user = decoded; 
           let userId = this.current_user.id;
-          console.log('User ID:', userId)
           this.fetchUserProfile(userId)
         } else {
           console.log('Token is null or undefined');
@@ -178,8 +176,6 @@ export default {
       })
       .then(response => {
         const userProfile = response.data; 
-
-        console.log('User profile:', userProfile);
         this.userProfile = userProfile;
       })
       .catch(error => {
