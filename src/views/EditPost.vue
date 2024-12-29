@@ -112,14 +112,7 @@ export default {
                     },
                 });
                 if (response.status === 200) {
-                    Swal.fire({
-                        title: 'Post Updated!',
-                        text: 'Your post has been updated successfully.',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        this.$router.push({ name: 'Profile', params: { id: localStorage.getItem('userId') } });
-                    });
+                    this.$router.push({ name: 'Profile', params: { id: localStorage.getItem('userId') } });
                 }
             } catch (error) {
                 console.error('Error updating post:', error);
