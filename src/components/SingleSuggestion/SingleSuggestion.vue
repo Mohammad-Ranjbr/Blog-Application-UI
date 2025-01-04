@@ -13,8 +13,7 @@
     </div>
 
     <div class="suggestion__right">
-      <button @click="toggleFollow" 
-      :class="['suggestion__follow-link', { unfollow: user.followedByCurrentUser }]">
+      <button @click="toggleFollow" :class="['suggestion__follow-link', { unfollow: user.followedByCurrentUser }]">
         {{ user.followedByCurrentUser ? 'Unfollow' : 'Follow' }}
       </button>
     </div>
@@ -33,7 +32,7 @@ export default {
   methods: {
     async toggleFollow() {
       const userId = localStorage.getItem('userId');
-      const accessToken = localStorage.getItem('accessToken'); 
+      const accessToken = localStorage.getItem('accessToken');
 
       const url = this.user.followedByCurrentUser
         ? `http://localhost:8082/api/v1/users/${userId}/unfollow/${this.user.id}`
@@ -116,9 +115,9 @@ export default {
 }
 
 .suggestion__follow-link {
-  padding: 0.3rem 1rem; 
-  width: 100px;  
-  text-align: center;  
+  padding: 0.3rem 1rem;
+  width: 100px;
+  text-align: center;
   border: none;
   cursor: pointer;
   font-size: 14px;
@@ -133,16 +132,13 @@ export default {
   }
 
   &.unfollow {
-    background-color: lighten($dark-gray, 30%); 
-    color: rgb(250, 99, 99);
-    height: 100%; 
-    border: none;
+    background-color: lighten($dark-gray, 30%);
+    color: $dark-gray;
     outline: none;
+
     &:hover {
       background-color: lighten($dark-gray, 25%);
     }
   }
 }
-
-
 </style>
