@@ -124,6 +124,8 @@
 
 <script>
 import axios from 'axios';
+import EventBus from '@/router/event-bus.js';
+
 export default {
   name: 'ProfileHeaderTitle',
  
@@ -218,6 +220,10 @@ export default {
   },
   mounted() {
     this.fetchUserData();
+    EventBus.$on('following-updated', this.fetchUserData);
+  },
+  beforeDestroy() {
+    EventBus.$off('following-updated', this.fetchUserData);
   },
   watch: {
     '$route.params.id': function () {

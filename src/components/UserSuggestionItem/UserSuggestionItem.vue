@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import EventBus from '@/router/event-bus.js';
+
 export default {
   name: 'UserSuggestionItem',
   props: {
@@ -63,6 +65,7 @@ export default {
         }
 
         this.user.followedByCurrentUser = !this.user.followedByCurrentUser;
+        EventBus.$emit('following-updated');
       } catch (error) {
         console.error('Failed to follow/unfollow:', error);
       }
