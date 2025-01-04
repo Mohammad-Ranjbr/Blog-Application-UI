@@ -1,17 +1,9 @@
 <template>
   <div class="suggestions-item">
-    <div class="suggestions-item__header">
-      <div class="suggestions-item__remove">&times;</div>
-    </div>
-
     <div class="suggestions-item__body">
       <div class="suggestions-item__img-container">
-        <img
-        :src="user.image ? `data:image/jpeg;base64,${user.image}` : 'default-image.jpg'"
-          :alt="user.name"
-          draggable="false"
-          class="suggestions-item__img"
-        />
+        <img :src="user.image ? `data:image/jpeg;base64,${user.image}` : 'default-image.jpg'" :alt="user.name"
+          draggable="false" class="suggestions-item__img" />
       </div>
 
       <div class="suggestions-item__name">
@@ -22,11 +14,9 @@
         {{ user.userName }}
       </div>
 
-      <button 
-  @click="toggleFollow" 
-  :class="['suggestions-item__follow-cta', { unfollow: user.followedByCurrentUser }]">
-  {{ user.followedByCurrentUser ? 'Unfollow' : 'Follow' }}
-</button>
+      <button @click="toggleFollow" :class="['suggestions-item__follow-cta', { unfollow: user.followedByCurrentUser }]">
+        {{ user.followedByCurrentUser ? 'Unfollow' : 'Follow' }}
+      </button>
 
     </div>
   </div>
@@ -111,6 +101,7 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: $font-size-2x;
+    margin-top: 15px;
   }
 
   &__name {
@@ -130,8 +121,9 @@ export default {
     padding: 3px 40px;
     text-align: center;
   }
+
   &__name-link {
-    color: black; 
+    color: black;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
@@ -152,27 +144,27 @@ export default {
   font-size: 14px;
   font-weight: 600;
   border-radius: 4px;
+  margin-top: 5px;
   transition: all 0.3s ease;
 
   &.follow {
     background-color: $main-color;
     color: white;
     outline: none;
+
     &:hover {
       background-color: darken($main-color, 10%);
     }
   }
 
   &.unfollow {
-    background-color: lighten($dark-gray, 30%); 
-    color: rgb(250, 99, 99);
-    height: 100%; 
-    border: none;
-    outline: none;
-    &:hover {
-      background-color: lighten($dark-gray, 25%);
-    }
-  }
-}
+      background-color: lighten($dark-gray, 30%);
+      color: $dark-gray;
+      outline: none;
 
+      &:hover {
+        background-color: lighten($dark-gray, 25%);
+      }
+    }
+}
 </style>

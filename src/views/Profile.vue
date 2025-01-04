@@ -3,7 +3,7 @@
     <profile-header></profile-header>
     <!-- <profile-stories></profile-stories> -->
 
-    
+
     <div v-if="isCurrentUserProfile" class="suggestions" style="margin-top: 30px;">
       <div class="direc direc--left" @click="scroll_left">
         <img src="./../assets/left-arrow.png" alt="left arrow" class="arrow" />
@@ -20,33 +20,23 @@
         </div>
       </div>
 
-      <div
-          class="modal fade"
-          id="seeall"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal__header">
-                <div class="modal__title">Similar Accounts</div>
-                <div class="modal__close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </div>
+      <div class="modal fade" id="seeall" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal__header">
+              <div class="modal__title">Similar Accounts</div>
+              <div class="modal__close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
               </div>
+            </div>
 
-              <div class="modal-body">
-                <follow-item
-                  v-for="(user, index) in suggestions"
-                  :key="index"
-                  :user="user"
-                ></follow-item>
-              </div>
+            <div class="modal-body">
+              <follow-item v-for="(user, index) in suggestions" :key="index" :user="user"></follow-item>
             </div>
           </div>
         </div>
-      
+      </div>
+
 
       <div class="suggestions__items">
         <user-suggestion v-for="(user, index) in suggestions" :key="index" :user="user"></user-suggestion>
@@ -80,7 +70,7 @@ import VueJwtDecode from 'vue-jwt-decode';
 
 export default {
   name: 'Profile',
-  data: function() {
+  data: function () {
     return {
       posts: [],
       suggestions: [],
@@ -113,12 +103,12 @@ export default {
           },
         })
         .then((response) => {
-          this.suggestions = response.data; 
-    
+          this.suggestions = response.data;
+
         })
         .catch((error) => {
           console.error('There was an error fetching the user suggestion:', error);
-        this.$router.push('/notfound');
+          this.$router.push('/notfound');
         });
     },
     scroll_left() {
@@ -141,7 +131,7 @@ export default {
       try {
         if (token) {
           let decoded = VueJwtDecode.decode(token);
-          this.current_user = decoded; 
+          this.current_user = decoded;
           let userId = this.current_user.id;
           this.fetchUserProfile(userId)
         } else {
@@ -153,43 +143,43 @@ export default {
       }
     },
     fetchUserPosts(userId) {
-    axios
-      .get(`http://localhost:8082/api/v1/posts/user/${userId}`, {
-        headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`,
-        },
-      })
-      .then((response) => {
-        this.posts = response.data.content;
-        this.posts.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
-      })
-      .catch((error) => {
-        console.error('Error fetching user posts:', error);
-        this.$router.push('/notfound');
-      });
+      axios
+        .get(`http://localhost:8082/api/v1/posts/user/${userId}`, {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.posts = response.data.content;
+          this.posts.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+        })
+        .catch((error) => {
+          console.error('Error fetching user posts:', error);
+          this.$router.push('/notfound');
+        });
     },
     fetchUserProfile(userId) {
       axios.get(`http://localhost:8082/api/v1/users/${userId}`, {
-      headers: {
-      Authorization: `${localStorage.getItem('accessToken')}`
-    }
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`
+        }
       })
-      .then(response => {
-        const userProfile = response.data; 
-        this.userProfile = userProfile;
-      })
-      .catch(error => {
-        console.error('There was an error fetching the user profile:', error);
-        this.$router.push('/notfound');
-      });
+        .then(response => {
+          const userProfile = response.data;
+          this.userProfile = userProfile;
+        })
+        .catch(error => {
+          console.error('There was an error fetching the user profile:', error);
+          this.$router.push('/notfound');
+        });
     },
-    
+
   },
   computed: {
-    type: function() {
+    type: function () {
       return this.postsOrTagged ? 'profile-gallery' : 'profile-gallery';
     },
-    items: function() {
+    items: function () {
       return this.postsOrTagged ? this.galleryPosts : this.galleryTagged;
     },
     isCurrentUserProfile() {
