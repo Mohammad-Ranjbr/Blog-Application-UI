@@ -59,6 +59,7 @@ export default {
       searchQuery: '',
       suggestions: [],
       showModal: false,
+      debounceTimeout: null,
       features: [
         {
           href: '/',
@@ -89,14 +90,21 @@ export default {
   beforeDestroy() {
     EventBus.$off('profile-updated', this.refreshNavbar);
   },
+  watch: {
+    searchQuery(newQuery) {
+      if (this.debounceTimeout) clearTimeout(this.debounceTimeout);
+      if (newQuery.trim() === '') {
+        this.suggestions = [];
+        this.showModal = false;
+        return;
+      }
+      this.debounceTimeout = setTimeout(() => {
+        this.fetchSearchResults(newQuery);
+      }, 300);
+    }
+  },
   methods: {
-    refreshNavbar() {
-      this.navbarKey += 1;
-      console.log('Navbar is refreshed!');
-    },
-    async handleSearchSubmit() {
-      event.preventDefault();
-
+    async fetchSearchResults() {
       if (this.searchQuery.trim() === '') return;
 
       const accessToken = localStorage.getItem('accessToken');
