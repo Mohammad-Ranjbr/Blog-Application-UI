@@ -137,7 +137,7 @@ export default {
                 text: 'The comment has been deleted successfully.',
                 icon: 'success',
                 timer: 2000,
-                showConfirmButton: false,
+                confirmButtonText: 'OK',
               });
             })
             .catch((error) => {

@@ -1,14 +1,11 @@
 <template>
   <div class="comments">
-    <comment v-for="(comment, index) in comments" :key="index" :comment="comment" @commentDeleted="handleCommentDeleted"></comment>
+    <comment v-for="(comment, index) in comments" :key="index" :comment="comment"
+      @commentDeleted="handleCommentDeleted"></comment>
     <section>
       <form class="comments__leave-comment" @submit.prevent="postComment">
-        <textarea
-          name="comment"
-          placeholder="Add a comment ..."
-          class="comments__comment-area"
-          v-model="commentMessage"
-        ></textarea>
+        <textarea name="comment" placeholder="Add a comment ..." class="comments__comment-area"
+          v-model="commentMessage"></textarea>
         <button type="submit" class="comments__post-btn" :disabled="!commentTyped">Post</button>
       </form>
     </section>
@@ -23,7 +20,7 @@ export default {
   components: {
     comment: () => import('./../SingleComment/SingleComment'),
   },
-  data: function() {
+  data: function () {
     return {
       commentMessage: '',
       comments: []
@@ -37,14 +34,10 @@ export default {
     postId: {
       type: Number,
       required: true,
-    },
-    userId: {
-      type: String,
-      required: true,
-    },
+    }
   },
   computed: {
-    commentTyped: function() {
+    commentTyped: function () {
       return this.commentMessage.length ? true : false;
     },
   },
@@ -52,13 +45,15 @@ export default {
     postComment() {
       if (!this.commentMessage.trim()) return;
 
+      const userId = localStorage.getItem('userId');
+
       const commentData = {
-      content: this.commentMessage,
-      parent: null,
-    };
+        content: this.commentMessage,
+        parent: null,
+      };
 
       axios
-        .post(`http://localhost:8082/api/v1/comments/post/${this.postId}/user/${this.userId}`, commentData, {
+        .post(`http://localhost:8082/api/v1/comments/post/${this.postId}/user/${userId}`, commentData, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`,
           },
@@ -77,19 +72,19 @@ export default {
       this.comments = this.comments.filter((comment) => comment.id !== commentId);
     },
     mounted() {
-    axios
-      .get('http://localhost:8082/api/v1/comments/${this.postId}', {
-        headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`,
-        },
-      })
-      .then((response) => {
-        this.comments = response.data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
-      })
-      .catch((error) => {
-        console.error('Error fetching comments:', error);
-      });
-  },
+      axios
+        .get('http://localhost:8082/api/v1/comments/${this.postId}', {
+          headers: {
+            Authorization: `${localStorage.getItem('accessToken')}`,
+          },
+        })
+        .then((response) => {
+          this.comments = response.data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+        })
+        .catch((error) => {
+          console.error('Error fetching comments:', error);
+        });
+    },
   }
 };
 </script>
@@ -144,6 +139,7 @@ export default {
     font-size: $font-size-3x;
     padding-right: 10px;
     font-weight: 500;
+    outline: none;
 
     &:disabled {
       color: rgba(0, 123, 255, 0.4);
