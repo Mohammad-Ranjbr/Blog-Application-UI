@@ -133,9 +133,13 @@ export default {
   }
 
   &.unfollow {
-    background-color: #ff4d4f;
+    background-color: lighten($dark-gray, 30%); 
+    color: rgb(250, 99, 99);
+    height: 100%; 
+    border: none;
+    outline: none;
     &:hover {
-      background-color: darken(#ff4d4f, 10%);
+      background-color: lighten($dark-gray, 25%);
     }
   }
 }

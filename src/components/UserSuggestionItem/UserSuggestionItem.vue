@@ -22,7 +22,12 @@
         {{ user.userName }}
       </div>
 
-      <button class="suggestions-item__follow-cta">Follow</button>
+      <button 
+  @click="toggleFollow" 
+  :class="['suggestions-item__follow-cta', { unfollow: user.followedByCurrentUser }]">
+  {{ user.followedByCurrentUser ? 'Unfollow' : 'Follow' }}
+</button>
+
     </div>
   </div>
 </template>
@@ -34,6 +39,33 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    async toggleFollow() {
+      const userId = localStorage.getItem('userId');
+      const accessToken = localStorage.getItem('accessToken');
+
+      const url = this.user.followedByCurrentUser
+        ? `http://localhost:8082/api/v1/users/${userId}/unfollow/${this.user.id}`
+        : `http://localhost:8082/api/v1/users/${userId}/follow/${this.user.id}`;
+
+      try {
+        const response = await fetch(url, {
+          method: this.user.followedByCurrentUser ? 'DELETE' : 'POST',
+          headers: {
+            Authorization: `${accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Request failed');
+        }
+
+        this.user.followedByCurrentUser = !this.user.followedByCurrentUser;
+      } catch (error) {
+        console.error('Failed to follow/unfollow:', error);
+      }
     },
   },
 };
@@ -106,6 +138,38 @@ export default {
       text-decoration: none;
     }
   }
-
 }
+
+.suggestions-item__follow-cta {
+  padding: 0.3rem 1rem;
+  width: 100px;
+  text-align: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+
+  &.follow {
+    background-color: $main-color;
+    color: white;
+    outline: none;
+    &:hover {
+      background-color: darken($main-color, 10%);
+    }
+  }
+
+  &.unfollow {
+    background-color: lighten($dark-gray, 30%); 
+    color: rgb(250, 99, 99);
+    height: 100%; 
+    border: none;
+    outline: none;
+    &:hover {
+      background-color: lighten($dark-gray, 25%);
+    }
+  }
+}
+
 </style>
