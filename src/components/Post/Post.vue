@@ -61,11 +61,7 @@ export default {
     comments: {
       type: Array,
       required: true,
-    },
-    userId: {
-      type: String,
-      required: true,
-    },
+    }
   },
   created() {
     if (!this.userId) {
