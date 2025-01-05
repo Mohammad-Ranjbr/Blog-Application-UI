@@ -40,7 +40,7 @@
       <div class="post__category">{{ post.category.title }}</div>
     </div>
     <post-description :title="post.title" :content="post.content" :created_at="post.creationDate"></post-description>
-    <post-comments :comments="comments" :post-id="post.id" :user-id="userId"></post-comments>
+    <post-comments :comments="comments" :post-id="post.id"></post-comments>
   </div>
 </template>
 

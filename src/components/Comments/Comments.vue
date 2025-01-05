@@ -1,6 +1,6 @@
 <template>
   <div class="comments">
-    <comment v-for="(comment, index) in comments" :key="index" :comment="comment"
+    <comment v-for="comment in comments" :key="comment.id" :comment="comment"
       @commentDeleted="handleCommentDeleted"></comment>
     <section>
       <form class="comments__leave-comment" @submit.prevent="postComment">
@@ -23,7 +23,8 @@ export default {
   data: function () {
     return {
       commentMessage: '',
-      comments: []
+      comments: [],
+      userId: localStorage.getItem('userId') || null,
     };
   },
   props: {
@@ -45,15 +46,13 @@ export default {
     postComment() {
       if (!this.commentMessage.trim()) return;
 
-      const userId = localStorage.getItem('userId');
-
       const commentData = {
         content: this.commentMessage,
         parent: null,
       };
 
       axios
-        .post(`http://localhost:8082/api/v1/comments/post/${this.postId}/user/${userId}`, commentData, {
+        .post(`http://localhost:8082/api/v1/comments/post/${this.postId}/user/${this.userId}`, commentData, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`,
           },
@@ -61,7 +60,7 @@ export default {
         .then((response) => {
           const newComment = response.data;
           this.comments.unshift(newComment);
-          this.comments.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+          //this.comments.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
           this.commentMessage = '';
         })
         .catch((error) => {
@@ -73,7 +72,7 @@ export default {
     },
     mounted() {
       axios
-        .get('http://localhost:8082/api/v1/comments/${this.postId}', {
+        .get(`http://localhost:8082/api/v1/comments/${this.postId}`, {
           headers: {
             Authorization: `${localStorage.getItem('accessToken')}`,
           },
