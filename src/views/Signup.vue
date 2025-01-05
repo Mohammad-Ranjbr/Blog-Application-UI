@@ -186,6 +186,14 @@ export default {
       text-align: center;
       margin-bottom: 30px;
 
+      .header__link {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      
       &__title {
         font-family: "Pacifico", cursive;
         font-size: 2.5rem;

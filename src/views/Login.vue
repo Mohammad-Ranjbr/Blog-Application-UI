@@ -21,23 +21,12 @@
 
         <form class="login-form" @submit.prevent="login">
           <div class="form-group">
-            <input
-              type="email"
-              id="email"
-              v-model="username"
-              class="form-control"
-              placeholder="Enter your email"
-            />
+            <input type="email" id="email" v-model="username" class="form-control" placeholder="Enter your email" />
           </div>
 
           <div class="form-group">
-            <input
-              type="password"
-              id="password"
-              v-model="password"
-              class="form-control"
-              placeholder="Enter your password"
-            />
+            <input type="password" id="password" v-model="password" class="form-control"
+              placeholder="Enter your password" />
           </div>
 
           <button type="submit" class="btn-primary">
@@ -47,7 +36,7 @@
 
         <div class="footer">
           <p>
-            Don’t have an account? 
+            Don’t have an account?
             <a href="./signup" class="signup-link">Signup</a>
           </p>
         </div>
@@ -62,7 +51,7 @@ import VueJwtDecode from 'vue-jwt-decode';
 
 export default {
   name: 'Login',
-  data: function() {
+  data: function () {
     return {
       username: '',
       password: '',
@@ -137,10 +126,19 @@ export default {
       text-align: center;
       margin-bottom: 30px;
 
+      .header__link {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
       &__title {
         font-family: "Pacifico", cursive;
         font-size: 2.5rem;
         color: #1976d2;
+        text-decoration: none;
       }
 
       &__subtitle {

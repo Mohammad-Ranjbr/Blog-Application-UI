@@ -132,7 +132,10 @@ export default {
     closeModal() {
       this.showModal = false;
       this.searchQuery = '';  
-    }
+    },
+    refreshNavbar() {
+    this.navbarKey += 1; 
+  },
   }
 };
 </script>
